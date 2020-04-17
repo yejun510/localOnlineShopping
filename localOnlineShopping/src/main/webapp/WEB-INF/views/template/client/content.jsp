@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div id="content_image">
-		<img src="resources/img/mainImage.jpg">
+		<img src="../resources/img/mainImage.jpg">
 	</div>
 	
 	<div id="content_about">
@@ -20,8 +20,8 @@
 	<div id="content_menu">
 		<table>
 			<tr>
-				<td><a href="#"><img src="resources/img/beef.jpg"></a></td>
-				<td><a href="#"><img src="resources/img/pork.jpg"></a></td>
+				<td><a href="#"><img src="../resources/img/beef.jpg"></a></td>
+				<td><a href="#"><img src="../resources/img/pork.jpg"></a></td>
 		</table>
 	</div>
 	
