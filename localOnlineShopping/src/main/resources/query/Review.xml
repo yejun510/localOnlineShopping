@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.juji.client.review.dao.ReviewDao">
+
+	<update id="writeReview" parameterType="Review">
+		insert into review_reply (r_num,p_num,id,o_serialnum,r_writer,r_date,r_image,r_content,r_satisfaction)
+		values (review_reply_seq.nextval,#{p_num},#{id},#{o_serialnum},#{id},sysdate,#{r_image},#{r_content},#{r_satisfaction})
+	</update>
+
+</mapper>
