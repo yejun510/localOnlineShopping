@@ -16,4 +16,13 @@ public class DeliveryDaoImpl implements DeliveryDao {
 		return session.selectList("listDelivery",id);
 	}
 
+	@Override
+	public void deleteDelivery(int o_serialnum) {
+		session.update("deleteDelivery",o_serialnum);
+	}
+	
+	@Override
+	public void buyDelivery(DeliveryVO dvo) {
+		session.update("buyDelivery",dvo);
+	}
 }

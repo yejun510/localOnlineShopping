@@ -15,5 +15,11 @@ public class ReviewDaoImpl implements ReviewDao {
 		session.update("writeReview",rvo);
 
 	}
+	
+	@Override
+	public ReviewVO searchNum(int o_serialnum) {
+	
+	return	session.selectOne("searchNum",o_serialnum);
+	}
 
 }

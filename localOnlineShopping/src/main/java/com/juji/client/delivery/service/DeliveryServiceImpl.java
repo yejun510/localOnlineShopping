@@ -21,5 +21,14 @@ public class DeliveryServiceImpl implements DeliveryService {
 		
 		return dao.listDelivery(id);
 	}
+	
+	@Override
+	public void deleteDelivery(int o_serialnum) {
+		dao.deleteDelivery(o_serialnum);
+	}
 
+	@Override
+	public void buyDelivery(DeliveryVO dvo) {
+		dao.buyDelivery(dvo);
+	}
 }

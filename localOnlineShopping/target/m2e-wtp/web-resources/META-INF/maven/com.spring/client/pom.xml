@@ -17,6 +17,20 @@
 	</properties>
 	<dependencies>
 
+		<!-- 메일 서포트 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+				
+		 <!-- Java Mail API -->
+  <dependency>
+     <groupId>javax.mail</groupId>
+     <artifactId>mail</artifactId>
+     <version>1.4.3</version>
+  </dependency>
+
 		<!-- excel write -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
