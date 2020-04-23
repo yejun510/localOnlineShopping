@@ -11,6 +11,23 @@
 			location.href = "/mypage/mypageOrder";
 		});
 		
+		$("#regist").click(function(){
+			var check = confirm("정말로 작성하시겠습니까?");
+			
+			if(check){
+				if($("#r_satisfaction").val() == '만족도를 선택해주세요'){
+					alert("만족도를 선택해주세요");
+				}else if($("#r_content").val() == null || $("#r_content").val() == ''){
+					alert("내용을 입력해 주세요.");
+				}else{
+					$("#reviewForm").attr({
+						"action" : "/review/writeReview" ,
+						"method" : "post"
+					});
+					$("#reviewForm").submit();
+				}
+			}
+		});
 		
 		
 	});
@@ -21,10 +38,11 @@
 	<div name="header1">
 	<jsp:include page="../template/client/header.jsp"></jsp:include>
 	</div>
-	
-	<a href="/review/a">여기</a>
+	주문번호 ${review.o_serialnum } 상품 번호 ${review.p_num }
 	<h3 align="center">리뷰작성 페이지</h3>
-	<form id="reviewForm" action="/review/writeReview" method="get">
+	<form id="reviewForm" enctype="multipart/form-data">
+	<input type="hidden" name="o_serialnum" id="o_serialnum" value="${review.o_serialnum }"/>
+	<input type="hidden" name="p_num" id="p_num" value="${review.p_num }"/>
 	<fieldset>
 		<table align="center">
 			<tr>
@@ -42,10 +60,10 @@
 				<td colspan="2"><textarea rows="20" cols="60" id="r_content" name="r_content"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="file" name="r_image" id="r_image"></td>
+				<td colspan="2"><input type="file" name="r_file"></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="submit" value="작성완료" id="regist"><input type="button" value="취소" id="cancel">	
+				<td colspan="2" align="center"><input type="button" value="작성완료" id="regist"><input type="button" value="취소" id="cancel">	
 		</table>
 	</fieldset>
 	</form>

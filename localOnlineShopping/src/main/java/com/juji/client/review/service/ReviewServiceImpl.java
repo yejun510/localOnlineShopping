@@ -18,5 +18,11 @@ public class ReviewServiceImpl implements ReviewService {
 	public void writeReview(ReviewVO rvo) {
 		dao.writeReview(rvo);
 	}
+	
+	@Override
+	public ReviewVO searchNum(int o_serialnum) {
+	
+		return dao.searchNum(o_serialnum);
+	}
 
 }

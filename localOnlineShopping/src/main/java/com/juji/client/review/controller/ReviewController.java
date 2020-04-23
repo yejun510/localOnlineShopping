@@ -1,5 +1,8 @@
 package com.juji.client.review.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.juji.client.common.file.FileUploadUtil;
 import com.juji.client.review.service.ReviewService;
 import com.juji.client.review.vo.ReviewVO;
 
@@ -24,14 +28,22 @@ public class ReviewController {
 	ReviewService reviewservice;
 
 	// 리뷰 작성
-	@RequestMapping(value = "/writeReview", method = RequestMethod.GET)
-	public String writeReview(@ModelAttribute ReviewVO rvo, HttpSession session) {
+	@RequestMapping(value = "/writeReview", method = RequestMethod.POST)
+	public String writeReview(@ModelAttribute ReviewVO rvo, HttpSession session,HttpServletRequest req) throws IOException {
 		log.info("리뷰작성");
 
+		System.out.println(rvo.getR_file());
+		
+		
+		  if(!rvo.getR_file().isEmpty()) {
+			  String file = FileUploadUtil.fileUpload(rvo.getR_file(),req,"review"); rvo.setR_image(file);
+		  }
+		 
+		 
 		
 		rvo.setId((String) session.getAttribute("id"));
-		rvo.setP_num("100a");
-		rvo.setO_serialnum(1);
+		
+		
 		
 		reviewservice.writeReview(rvo);
 

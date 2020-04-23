@@ -12,8 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.juji.client.board.service.BoardService;
+import com.juji.client.board.vo.BoardVO;
+import com.juji.client.common.page.Paging;
 import com.juji.client.delivery.service.DeliveryService;
 import com.juji.client.delivery.vo.DeliveryVO;
 import com.juji.client.member.service.MemberService;
@@ -33,6 +38,12 @@ public class MypageController {
 	
 	@Autowired
 	private DeliveryService deliveryservice;
+	
+	@Autowired
+	private ReviewService reviewservice;
+	
+	@Autowired
+	private BoardService boardservice;
 	
 	
 	
@@ -170,16 +181,44 @@ public class MypageController {
 	
 	//나의 게시글 리스트
 	@RequestMapping(value = "/mypagePost", method = RequestMethod.GET)
-	public ModelAndView myPost() {
+	public ModelAndView myPost(@ModelAttribute BoardVO bvo,HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		
+		String id = (String)session.getAttribute("id");
+		
+		bvo.setId(id);
+		
+		int total;
+		//페이지 세팅
+		
+		Paging.setPage(bvo);
+		
+		System.out.println(bvo.getQ_category());
+		
+		if(bvo.getQ_category() != null) {
+		
+		if(bvo.getQ_category().equals("기타") || bvo.getQ_category().equals("환불/반품")) {
+					total = boardservice.ectCnt(bvo);
+		} else {
+			total = boardservice.boardListCnt(bvo);	
+			}
+		}else {
+			total = boardservice.boardListCnt(bvo);
+		}
+		System.out.println("전체 레코드 수"+total);
+		
+		List<BoardVO> list = boardservice.myBoardList(bvo);
+		
+		model.addObject("boardList",list);
+		model.addObject("total",total);
+		model.addObject("bvo",bvo);
 		model.setViewName("/mypage/mypagePost");
 		return model;
 	}
 	
 	//주문 내역 조회 페이지
 	@RequestMapping(value = "/mypageOrder",method = RequestMethod.GET)
-	public ModelAndView myOrderList(HttpSession session) {
+	public ModelAndView myOrderList(HttpSession session,HttpServletRequest req) {
 		ModelAndView model = new ModelAndView();
 		
 		String id =(String)session.getAttribute("id");
@@ -188,17 +227,60 @@ public class MypageController {
 		
 		model.addObject("list",list);
 		
+		req.setAttribute("id", id);
+		
 		model.setViewName("/mypage/mypageOrder");
 		return model;
 	}
 	
 	//리뷰 작성 페이지
 	@RequestMapping(value = "/mypageReview",method = RequestMethod.GET)
-	public ModelAndView writeReviewForm() {
+	public ModelAndView writeReviewForm(@ModelAttribute DeliveryVO dvo) {
 		ModelAndView model = new ModelAndView();
+		
+		
+		
+		ReviewVO review = new ReviewVO();
+		review.setO_serialnum(dvo.getO_serialnum());
+		review.setP_num(dvo.getP_num());
+		
+		model.addObject("review",review);
 		
 		model.setViewName("/mypage/mypageReview");
 		return model;
+	}
+	
+	//이미 작성한 리뷰 페이지
+	@ResponseBody
+	@RequestMapping(value = "/searchReview",method = RequestMethod.GET)
+	public int searchReview(@ModelAttribute DeliveryVO dvo) {
+		int result;
+		
+		if(reviewservice.searchNum(dvo.getO_serialnum()) == null) {
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
+	}
+	
+	//주문 취소	
+	@RequestMapping(value = "/deleteOrder",method = RequestMethod.POST)
+	public String deleteOrder(@RequestParam(value = "o_serialnum") int o_serialnum) { 
+		
+		 
+		deliveryservice.deleteDelivery(o_serialnum);
+		
+		return "redirect:/mypage/mypageOrder";
+	}
+	
+	//구매 확정					
+	@RequestMapping(value = "/buyOrder", method = {RequestMethod.POST,RequestMethod.GET})
+	public String buyDelivery(DeliveryVO dvo) {
+		
+		deliveryservice.buyDelivery(dvo);
+		
+		return "redirect:/mypage/mypageOrder";
 	}
 	
 	
