@@ -1,6 +1,10 @@
 package com.juji.admin.notice.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.juji.admin.notice.service.AdminNoticeService;
+import com.juji.client.common.file.FileUploadUtil;
 import com.juji.client.common.page.Paging;
 import com.juji.client.notice.vo.NoticeVO;
 
 /* 컨트롤러 */
 @Controller
-@RequestMapping(value = "/notice")
+@RequestMapping(value = "/admin")
 public class AdminNoticeController {
 	private Logger log = LoggerFactory.getLogger(AdminNoticeController.class);
 
@@ -25,7 +30,7 @@ public class AdminNoticeController {
 
 	/* 글 목록 구현하기 */
 
-	@RequestMapping(value = "/noticeList.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/noticeList.do", method = RequestMethod.GET)
 	public String noticeList(@ModelAttribute NoticeVO nvo, Model model) {
 		log.info("noitceList 호출 성공");
 
@@ -44,33 +49,47 @@ public class AdminNoticeController {
 		model.addAttribute("data",nvo);
 		model.addAttribute("total", total);
 
-		return "notice/adminNoticeList";
+		return "admin/notice/adminNoticeList";
 	}
 
 	/* 글 쓰기 페이지로 이동 */
 
-	@RequestMapping(value = "/noticeWrite.do")
+	@RequestMapping(value = "/notice/noticeWrite.do")
 	public String adminNoticeWrite() {
 		log.info("adminNoticeWrite 호출 성공");
-		return "notice/adminNoticeWrite";
-
+		return "admin/notice/adminNoticeWrite";
 	}
 
 	/* 글 쓰기 구현하기 */
 
-	@RequestMapping(value = "/noticeInsert.do", method = RequestMethod.POST)
-	public String noticeInsert(@ModelAttribute NoticeVO nvo, Model model) {
+	@RequestMapping(value = "/notice/noticeInsert.do", method = RequestMethod.POST)
+	public String noticeInsert(@ModelAttribute NoticeVO nvo, Model model, HttpServletRequest request) throws IllegalStateException, IOException{
 		log.info("noticeInsert 호출 성공");
 
 		int result = 0;
 		String url = "";
+		
+		if (nvo.getFile1() != null) {
+			String n_image1 = FileUploadUtil.fileUpload(nvo.getFile1(), request, "notice");
+			nvo.setN_image1(n_image1);
+		}
+		
+		if (nvo.getFile2() != null) {
+			String n_image2 = FileUploadUtil.fileUpload(nvo.getFile2(), request, "notice");
+			nvo.setN_image2(n_image2);
+		}
+		
+		if (nvo.getFile3() != null) {
+			String n_image3 = FileUploadUtil.fileUpload(nvo.getFile3(), request, "notice");
+			nvo.setN_image3(n_image3);
+		}
 
 		result = adminNoticeService.noticeInsert(nvo);
 		if (result == 1) {
-			url = "/notice/noticeList.do";
+			url = "/admin/notice/noticeList.do";
 		} else {
 			model.addAttribute("code", 1);
-			url = "/notice/noticeWrite.do";
+			url = "/admin/notice/noticeWrite.do";
 		}
 
 		return "redirect:" + url;
@@ -79,10 +98,10 @@ public class AdminNoticeController {
 
 	/* 글 상세보기 구현 */
 
-	@RequestMapping(value = "/noticeDetail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/notice/noticeDetail.do", method = RequestMethod.GET)
 	public String noticeDetail(@ModelAttribute NoticeVO nvo, Model model) {
 		log.info("noticeDetail 호출 성공");
-		log.info("n_num=" + nvo.getN_num());
+		log.info("n_num = " + nvo.getN_num());
 
 		// 조회수 증가
 		nvo.setN_view(nvo.getN_view() + 1);
@@ -97,62 +116,104 @@ public class AdminNoticeController {
 
 		model.addAttribute("detail", detail);
 
-		return "notice/adminNoticeDetail";
+		return "admin/notice/adminNoticeDetail";
 
 	}
 
 	/* 글 수정 페이지로 이동 */
-
-	/*
-	 * @param : n_num
-	 * 
-	 * @return : notiveVO
-	 */
-
-	@RequestMapping(value = "/updateForm.do")
+	@RequestMapping(value = "/notice/updateForm.do")
 	public String updateForm(@ModelAttribute NoticeVO nvo, Model model) {
 		log.info("updateForm 호출 성공");
 
-		log.info("n_num=" + nvo.getN_num());
+		log.info("n_num = " + nvo.getN_num());
 
 		NoticeVO updateData = new NoticeVO();
 		updateData = adminNoticeService.noticeDetail(nvo);
 
 		model.addAttribute("updateData", updateData);
 
-		return "notice/adminNoticeUpdate";
+		return "admin/notice/adminNoticeUpdate";
 
 	}
 
 	/* 글 수정 구현하기 */
-
-	@RequestMapping(value = "/noticeUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public String noticeUpdate(@ModelAttribute NoticeVO nvo) {
+	@RequestMapping(value = "/notice/noticeUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String noticeUpdate(@ModelAttribute NoticeVO nvo, HttpServletRequest request) throws IllegalStateException, IOException{
 		log.info("noticeUpdate 호출 성공");
-
+			
+		System.out.println(nvo.getN_image1()+"<<<이미지1");
+		System.out.println(nvo.getN_image2()+"<<<이미지2");
+		System.out.println(nvo.getN_image3()+"<<<이미지3");
+		
+		if(!nvo.getFile1().isEmpty()) {
+			log.info("======== file = " + nvo.getFile1().getOriginalFilename());
+			if(nvo.getN_image1()!=null && nvo.getN_image1().length() != 0) {
+				System.out.println("1");
+				FileUploadUtil.fileDelete(nvo.getN_image1(), request);
+			}
+			 String n_image1 = FileUploadUtil.fileUpload(nvo.getFile1(), request,"notice");
+			nvo.setN_image1(n_image1);
+		}else {
+			log.info("첨부파일 없음");
+		}
+		
+		if(!nvo.getFile2().isEmpty()) {
+			log.info("======== file = " + nvo.getFile2().getOriginalFilename());
+			if(nvo.getN_image2()!=null && nvo.getN_image2().length() != 0) {
+				FileUploadUtil.fileDelete(nvo.getN_image2(), request);
+			}
+			String n_image2 = FileUploadUtil.fileUpload(nvo.getFile2(), request,"notice");
+			nvo.setN_image2(n_image2);
+		}else {
+			log.info("첨부파일 없음");
+		}
+		
+		if(!nvo.getFile3().isEmpty()) {
+			log.info("======== file = " + nvo.getFile3().getOriginalFilename());
+			if(nvo.getN_image3()!=null && nvo.getN_image3().length() != 0) {
+				FileUploadUtil.fileDelete(nvo.getN_image3(), request);
+			}
+			String n_image3 = FileUploadUtil.fileUpload(nvo.getFile3(), request,"notice");
+			nvo.setN_image3(n_image3);
+		}else {
+			log.info("첨부파일 없음");
+		}
+		
 		adminNoticeService.noticeUpdate(nvo);
-		return "redirect:/notice/noticeDetail.do?n_num=" + nvo.getN_num();
+		return "redirect:/admin/notice/noticeDetail.do?n_num=" + nvo.getN_num();
 
 	}
 
 	/* 글 삭제 구현하기 */
 
-	/* @throws IOException */
-
-	@RequestMapping(value = "/noticeDelete.do", method = RequestMethod.GET)
-	public String noticeDelete(@ModelAttribute NoticeVO nvo) {
-		log.info("boardDelete 호출 성공");
+	@RequestMapping(value = "/notice/noticeDelete.do", method = RequestMethod.GET)
+	public String noticeDelete(@ModelAttribute NoticeVO nvo, HttpServletRequest request) throws IllegalStateException, IOException {
+		log.info("noticeDelete 호출 성공");
 
 		// 아래 변수에는 입력 성공에 대한 상태값을 담습니다.(1 or 0)
 		int result = 0;
 		String url = "";
+		
+		System.out.println(nvo.getN_image1());
+		System.out.println(nvo.getN_image2());
+		System.out.println(nvo.getN_image3());
+		
+		if(nvo.getN_image1()!=null && nvo.getN_image1().length() != 0) {
+			FileUploadUtil.fileDelete(nvo.getN_image1(), request);
+		}
+		if(nvo.getN_image2()!=null && nvo.getN_image2().length() != 0) {
+			FileUploadUtil.fileDelete(nvo.getN_image2(), request);
+		}
+		if(nvo.getN_image3()!=null && nvo.getN_image3().length() != 0) {
+			FileUploadUtil.fileDelete(nvo.getN_image3(), request);
+		}
 
 		result = adminNoticeService.noticeDelete(nvo.getN_num());
 
 		if (result == 1) {
-			url = "/notice/noticeList.do";
+			url = "/admin/notice/noticeList.do";
 		} else {
-			url = "/notice/noticeDetail.do?n_num=" + nvo.getN_num();
+			url = "/admin/notice/noticeDetail.do?n_num=" + nvo.getN_num();
 		}
 		return "redirect:" + url;
 

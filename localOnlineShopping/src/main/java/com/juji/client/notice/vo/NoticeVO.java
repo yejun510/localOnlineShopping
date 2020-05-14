@@ -1,5 +1,7 @@
 package com.juji.client.notice.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.juji.client.common.vo.CommonVO;
 
 public class NoticeVO extends CommonVO {
@@ -13,6 +15,10 @@ public class NoticeVO extends CommonVO {
 	private String n_image1; // 이미지1
 	private String n_image2; // 아미지2
 	private String n_image3; // 이미지3
+
+	private MultipartFile file1; // 첨부파일(이미지)
+	private MultipartFile file2; // 첨부파일(이미지)
+	private MultipartFile file3; // 첨부파일(이미지)
 
 	public int getN_num() {
 		return n_num;
@@ -85,4 +91,29 @@ public class NoticeVO extends CommonVO {
 	public void setN_image3(String n_image3) {
 		this.n_image3 = n_image3;
 	}
+
+	public MultipartFile getFile1() {
+		return file1;
+	}
+
+	public void setFile1(MultipartFile file1) {
+		this.file1 = file1;
+	}
+
+	public MultipartFile getFile2() {
+		return file2;
+	}
+
+	public void setFile2(MultipartFile file2) {
+		this.file2 = file2;
+	}
+
+	public MultipartFile getFile3() {
+		return file3;
+	}
+
+	public void setFile3(MultipartFile file3) {
+		this.file3 = file3;
+	}
+
 }

@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.juji.admin.board.dao.AdminBoardDao">
 
-
-
 	<!-- 문의게시판 기본 조회 -->
 	<select id="boardList" resultType="board">
 		SELECT *
@@ -16,8 +14,7 @@
 	</select>
 
 	<!-- 문의게시판 상세 조회 -->
-	<select id="boardDetail" resultType="board"
-		parameterType="board">
+	<select id="boardDetail" resultType="board" parameterType="board">
 		SELECT *
 		FROM question_board
 		WHERE q_num = #{q_num}

@@ -1,5 +1,7 @@
 package com.juji.admin.reply.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.juji.client.common.vo.CommonVO;
 
 public class ReplyVO extends CommonVO {
@@ -10,6 +12,8 @@ public class ReplyVO extends CommonVO {
 	private String a_date; // 등록일
 	private String a_content; // 내용
 	private String a_image; // 이미지
+	
+	private MultipartFile a_file; // 답변이미지 첨부
 
 	public int getA_num() {
 		return a_num;
@@ -57,6 +61,14 @@ public class ReplyVO extends CommonVO {
 
 	public void setA_image(String a_image) {
 		this.a_image = a_image;
+	}
+
+	public MultipartFile getA_file() {
+		return a_file;
+	}
+
+	public void setA_file(MultipartFile a_file) {
+		this.a_file = a_file;
 	}
 
 }

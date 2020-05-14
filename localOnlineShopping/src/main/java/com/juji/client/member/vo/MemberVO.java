@@ -2,7 +2,9 @@ package com.juji.client.member.vo;
 
 import java.util.Date;
 
-public class MemberVO {
+import com.juji.client.common.vo.CommonVO;
+
+public class MemberVO extends CommonVO{
 	private String id;
 	private String passwd;
 	private String name;
@@ -13,6 +15,7 @@ public class MemberVO {
 	private String s_address1;
 	private String s_address2;
 	private String s_address3;
+	
 	
 	public String getId() {
 		return id;
@@ -74,6 +77,5 @@ public class MemberVO {
 	public void setS_address3(String s_address3) {
 		this.s_address3 = s_address3;
 	}
-	
 	
 }

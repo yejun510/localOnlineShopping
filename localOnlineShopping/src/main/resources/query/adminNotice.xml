@@ -41,10 +41,10 @@
 	<insert id="noticeInsert" parameterType="notice">
 
 		INSERT INTO notice(
-		n_num, n_title, n_content, n_writer, n_view
+		n_num, n_title, n_content, n_writer, n_view,n_image1,n_image2,n_image3
 		)
 		VALUES(
-		notice_seq.nextval, #{n_title},#{n_content},#{n_writer},0
+		notice_seq.nextval, #{n_title},#{n_content},#{n_writer},0,#{n_image1},#{n_image2},#{n_image3}
 		)
 	</insert>
 
@@ -55,6 +55,9 @@
 		SET n_title = #{n_title}
 		, n_content = #{n_content}
 		,n_date = sysdate
+		,n_image1 = #{n_image1}
+		,n_image2 = #{n_image2}
+		,n_image3 = #{n_image3}
 		WHERE n_num = #{n_num}
 	</update>
 

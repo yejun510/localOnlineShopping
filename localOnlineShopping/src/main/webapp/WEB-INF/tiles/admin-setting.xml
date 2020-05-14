@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="login" template="/WEB-INF/views/template/admin/adminLoginLayout.jsp">
+		<put-attribute name="title" value="관리자 로그인 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/template/admin/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/adminLoginPage.jsp" />
+	</definition>
+	
+	<definition name="admincontent" template="/WEB-INF/views/template/admin/adminContentLayout.jsp">
+		<put-attribute name="title" value="관리자 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/template/admin/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/views/template/admin/left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/template/admin/main.jsp" />
+	</definition>
+	
+	<definition name="admin/product/*" extends="admincontent">
+		<put-attribute name="title" value="상품 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/product/{1}.jsp" />
+	</definition>
+	
+	<definition name="admin/member/*" extends="admincontent">
+		<put-attribute name="title" value="회원 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/member/{1}.jsp" />
+	</definition>
+	
+	<definition name="admin/delivery/*" extends="admincontent">
+		<put-attribute name="title" value="주문 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/delivery/{1}.jsp" />
+	</definition>
+	
+	<definition name="admin/review/*" extends="admincontent">
+		<put-attribute name="title" value="후기 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/review/{1}.jsp" />
+	</definition>
+	
+	<definition name="admin/graph/*" extends="admincontent">
+		<put-attribute name="title" value="통계 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/graph/{1}.jsp" />
+	</definition>
+	
+	<definition name="admin/notice/*" extends="admincontent">
+		<put-attribute name="title" value="공지사항 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/notice/{1}.jsp" />
+	</definition>
+	
+	<definition name="admin/board/*" extends="admincontent">
+		<put-attribute name="title" value="문의 페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/board/{1}.jsp" />
+	</definition>
+</tiles-definitions>

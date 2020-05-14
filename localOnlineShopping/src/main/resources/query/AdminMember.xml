@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juji.admin.member.dao.AdminMemberDao">
+
+	<!-- 게시물 검색 쿼리 분리 -->
+	<sql id="memberCommon">
+		SELECT
+		id,name,join_date
+		FROM member
+		<where>
+			<if test="search=='id'">
+							<![CDATA[ id LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='name'">
+							<![CDATA[ name LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='join_date'">
+							<![CDATA[ to_char(join_date,'YYYY-MM-DD') between #{start_date and #{end_date} ]]>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 회원목록 전체 조회 -->
+	<select id="memberList" parameterType="member"
+		resultType="member">
+		/* Member - memberList */
+		SELECT
+		id,name,join_date
+		FROM
+		( SELECT
+		list.*,ROWNUM AS RNUM
+		FROM(
+		<include refid="memberCommon"></include>
+		)list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					RNUM BETWEEN #{start_row} AND #{end_row}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<!-- 게시물 카운트 페이징 -->
+	<select id="memberListCnt" parameterType="member"
+		resultType="int">
+		/* Member - memberListCnt */
+		SELECT NVL(count(1),0) 
+		FROM
+		( SELECT
+		list.*, ROWNUM AS RNUM
+		FROM(
+		<include refid="memberCommon"></include>
+		ORDER BY id desc
+		)list
+		)
+	</select>
+
+	<!-- 회원 상세 페이지를 위한 조회 -->
+	<select id="memberDetail" parameterType="member"
+		resultType="member">
+		/* Member - memberDetail */
+		SELECT
+			*
+		FROM
+			member
+		WHERE
+			id = #{id}
+	</select>
+</mapper>

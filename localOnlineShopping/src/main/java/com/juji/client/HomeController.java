@@ -1,7 +1,5 @@
 package com.juji.client;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -28,5 +26,16 @@ public class HomeController {
 		
 		return "main";
 	}
+	
+	@RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
+	public String admin(Locale locale, Model model) {
+		return "login";
+	}
+	
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String login(Locale locale, Model model) {
+		return "index";
+	}
+	
 	
 }
