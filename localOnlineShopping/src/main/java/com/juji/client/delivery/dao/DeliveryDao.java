@@ -8,4 +8,5 @@ public interface DeliveryDao {
 	public List<DeliveryVO> listDelivery(String id);
 	public void deleteDelivery(int o_serialnum);
 	public void buyDelivery(DeliveryVO dvo);
+	public void insertDelivery(DeliveryVO dvo);
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.juji.client.notice.dao.NoticeDao">
+
+	
+	
+<!-- 공지사항 리스트 조회 -->
+<select id="noticeList" resultType="Notice">
+	SELECT  *
+	FROM (select list.*,rownum as rnum
+       			 from  (select notice.*
+              			 from notice
+               			order by n_num desc) list)
+    <where>
+			 <if test="start_row != null and start_row != ''">
+						<if test="end_row != null and end_row != ''">
+						RNUM BETWEEN #{start_row} AND #{end_row}
+						</if>
+			</if>
+			
+	</where>
+			
+</select>
+
+<!-- 공지사항 상세 페이지 조회 -->
+<select id="noticeDetail" resultType="Notice">
+	SELECT
+		*
+		FROM notice
+		WHERE n_num = #{n_num}
+</select>
+
+<update id="noticeView" parameterType="int">
+	update notice set n_view = n_view+1 where n_num = #{n_num}
+</update>
+
+<select id="noticeCnt" resultType="int">
+select count(*) from notice
+</select>
+
+</mapper>

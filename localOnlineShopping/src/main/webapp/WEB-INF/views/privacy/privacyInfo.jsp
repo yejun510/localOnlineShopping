@@ -7,9 +7,7 @@
 <title>주지육림-개인정보 처리 방침</title>
 </head>
 <body>
-<div id="header">
-	<jsp:include page="../template/client/header.jsp"></jsp:include>
-	</div>
+
 	
 	<p>주식회사 주지육림은 (이하 회사는) 는 개인정보 보호법 제30조에 따라 정보주체(고객)의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리지침을 수립․공개합니다.
 </p><p></p>
@@ -159,8 +157,6 @@ o 로그 기록<br>
 <p>■ 고지의 의무<br>
 회사는 개인정보취급방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.<br>
 시행일 : 본 방침은 2019년 6월 21일부터 시행됩니다.<br>
-<div id="footer">
-	<jsp:include page="../template/client/footer.jsp"></jsp:include>
-	</div>
+
 </body>
 </html>

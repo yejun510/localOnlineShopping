@@ -8,5 +8,30 @@
 		insert into review_reply (r_num,p_num,id,o_serialnum,r_writer,r_date,r_image,r_content,r_satisfaction)
 		values (review_reply_seq.nextval,#{p_num},#{id},#{o_serialnum},#{id},sysdate,#{r_image},#{r_content},#{r_satisfaction})
 	</update>
-
+	
+	<select id="searchNum" parameterType="int" resultType="Review">
+		select o_serialnum from review_reply
+		where o_serialnum = #{o_serialnum}
+	</select>
+	
+	<select id="reviewList" resultType="Review" parameterType="String">
+		select *
+		from review_reply
+		where p_num = #{p_num}
+	
+	</select>
+	<update id="reviewUpdate" parameterType="Review">
+		update review_reply set r_content = #{r_content} , r_image = #{r_image}, r_satisfaction = #{r_satisfaction}
+		where r_num = #{r_num}
+	</update>
+	
+	<select id="reviewUpdateForm" parameterType="int" resultType="Review">
+		select *
+		from review_reply
+		where r_num = #{r_num}
+	</select>
+	
+	<delete id="reviewDelete" parameterType="int">
+		delete from review_reply where r_num = #{r_num}
+	</delete>
 </mapper>

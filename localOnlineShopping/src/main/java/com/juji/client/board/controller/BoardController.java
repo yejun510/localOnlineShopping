@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.juji.client.board.service.BoardService;
 import com.juji.client.board.vo.BoardVO;
 import com.juji.client.common.file.FileUploadUtil;
 import com.juji.client.common.page.Paging;
+import com.juji.client.reply.vo.ReplyVO;
 
 @Controller
 @RequestMapping("/board")
@@ -45,10 +47,10 @@ public class BoardController {
 		if(bvo.getQ_category().equals("기타") || bvo.getQ_category().equals("환불/반품")) {
 					total = boardservice.ectCnt(bvo);
 		} else {
-			total = boardservice.boardListCnt(bvo);	
+					total = boardservice.boardListCnt(bvo);	
 			}
 		}else {
-			total = boardservice.boardListCnt(bvo);
+					total = boardservice.boardListCnt(bvo);
 		}
 		
 		List<BoardVO> list = boardservice.boardList(bvo);
@@ -66,7 +68,7 @@ public class BoardController {
 		ModelAndView model = new ModelAndView();
 		log.info("게시글 상세 보기");
 		
-		
+		List<ReplyVO> reply = boardservice.replyList(bvo.getQ_num());
 		
 		int view = bvo.getQ_view()+1;
 		
@@ -80,6 +82,7 @@ public class BoardController {
 		board = boardservice.detailBoard(bvo.getQ_num());
 		board.setPage(bvo.getPage());
 		model.addObject("detail",board);
+		model.addObject("reply_list",reply);
 		model.setViewName("/board/boardDetail");
 		
 		return model;
@@ -127,33 +130,28 @@ public class BoardController {
 	@RequestMapping(value = "/updateBoard",method = RequestMethod.POST)
 	public String updateBoard(@ModelAttribute BoardVO bvo,HttpServletRequest req) throws IOException {
 		
-		if(!bvo.getQ_image1().isEmpty()) {
-			FileUploadUtil.fileDelete(bvo.getQ_image1(), req);
-			bvo.setQ_image1(null);
-		}
-
-		if(!bvo.getQ_image2().isEmpty()) {
-			FileUploadUtil.fileDelete(bvo.getQ_image2(), req);
-			bvo.setQ_image2(null);
-		}
-		
-		if(!bvo.getQ_image3().isEmpty()) {
-			FileUploadUtil.fileDelete(bvo.getQ_image3(), req);
-			bvo.setQ_image3(null);
-		}
 		
 		if(!bvo.getFile1().isEmpty()) {
-			
+			if(!bvo.getQ_image1().isEmpty()) {
+				FileUploadUtil.fileDelete(bvo.getQ_image1(), req);
+				bvo.setQ_image1(null);
+			}
 				String file1 = FileUploadUtil.fileUpload(bvo.getFile1(),req,"board");
 				bvo.setQ_image1(file1);
 		}
 		if(!bvo.getFile2().isEmpty()) {
-			
+			if(!bvo.getQ_image2().isEmpty()) {
+				FileUploadUtil.fileDelete(bvo.getQ_image2(), req);
+				bvo.setQ_image2(null);
+			}
 				String file2 = FileUploadUtil.fileUpload(bvo.getFile2(), req,"board");
 				bvo.setQ_image2(file2);
 		}
 		if(!bvo.getFile3().isEmpty()) {
-			
+			if(!bvo.getQ_image3().isEmpty()) {
+				FileUploadUtil.fileDelete(bvo.getQ_image3(), req);
+				bvo.setQ_image3(null);
+			}
 			String file3 = FileUploadUtil.fileUpload(bvo.getFile3(), req,"board");
 			bvo.setQ_image3(file3);
 		}
@@ -171,7 +169,8 @@ public class BoardController {
 	
 	@RequestMapping(value = "/insertBoard",method = RequestMethod.POST)
 	public String insertBoard(@ModelAttribute BoardVO bvo,HttpSession session,HttpServletRequest req) throws IOException {
-		System.out.println("인서트");
+		
+		bvo.setQ_reply("답변대기");
 		
 		if(!bvo.getFile1().isEmpty()) {
 			System.out.println("file1="+bvo.getFile1());
@@ -194,6 +193,39 @@ public class BoardController {
 	
 		return "redirect:/board/boardList";
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/searchReply",method = RequestMethod.POST)
+	public int searchReply(@ModelAttribute ReplyVO rvo) {
+		int result;
+		List<ReplyVO> reply = boardservice.replyList(rvo.getQ_num());
+		if(!reply.isEmpty()) {
+			result = 0;
+		}else {
+			result = 1;
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteReply",method = RequestMethod.POST)
+	public int deleteReply(@RequestParam("q_num") int q_num,HttpServletRequest req) throws IOException {
+		int result;
+		
+		System.out.println(q_num);
+		
+		List<ReplyVO> reply = boardservice.replyList(q_num);
+		if(!reply.isEmpty()) {
+			for(int i = 0; i<reply.size();i++) {
+				if(reply.get(i).getA_image() != null && reply.get(i).getA_image().length() != 0) {
+					FileUploadUtil.fileDelete(reply.get(i).getA_image(), req);
+				}
+			}
+		}
+		result = boardservice.replyDelete(q_num);
+		System.out.println("삭제:   "+result);
+		return result;
 	}
 }
 

@@ -4,6 +4,7 @@ package com.juji.client.board.dao;
 import java.util.List;
 
 import com.juji.client.board.vo.BoardVO;
+import com.juji.client.reply.vo.ReplyVO;
 
 public interface BoardDao {
 
@@ -16,4 +17,8 @@ public interface BoardDao {
 	public void detailView(BoardVO bvo);
 	public int boardListCnt(BoardVO bvo);
 	public int ectCnt(BoardVO bvo);
+	public int myBoardListCnt(BoardVO bvo);
+	public int myEctCnt(BoardVO bvo);
+	public List<ReplyVO> replyList(int q_num);
+	public void replyDelete(int q_num);
 }

@@ -4,6 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+	.btn { font-family: 'Nanum Brush Script', cursive;}
+  
+	.btn:hover{color:#fff;}
+
+	.hover1:hover{ box-shadow: 100px 0 0 0 rgba(0,0,0,0.5) inset; }
+</style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -15,14 +22,12 @@
 <title>주지육림 - PROFILE</title>
 </head>
 <body>
-	<div name="header1">
-	<jsp:include page="../template/client/header.jsp"></jsp:include>
-	</div>
+	
 	
 	<h3 align="center">PROFILE</h3>
 	<br>
 	<br>
-	<table align="center" border="1">
+	<table align="center" class="table table-striped table-bordered">
 		<tr>
 			<td><label>아이디</label></td>
 			<td><label>${member.id }</label></td>
@@ -56,11 +61,9 @@
 			<td><label>${member.s_address3 }</label></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="right"><input type="button" id="modify" value="회원정보 수정"></td>
+			<td colspan="2" align="right"><input type="button" id="modify" value="회원정보 수정" class="btn hover1 btn-default"></td>
 		</tr>
 	</table>
-	<div name="footer1">
-	<jsp:include page="../template/client/footer.jsp"></jsp:include>
-	</div>
+	
 </body>
 </html>

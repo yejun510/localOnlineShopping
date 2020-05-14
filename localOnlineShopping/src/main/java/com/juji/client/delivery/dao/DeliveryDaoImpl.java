@@ -25,4 +25,9 @@ public class DeliveryDaoImpl implements DeliveryDao {
 	public void buyDelivery(DeliveryVO dvo) {
 		session.update("buyDelivery",dvo);
 	}
+	@Override
+	public void insertDelivery(DeliveryVO dvo) {
+		 session.insert("insertDelivery", dvo);
+	}
+
 }

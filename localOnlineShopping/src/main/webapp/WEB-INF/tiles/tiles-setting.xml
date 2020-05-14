@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="intro" template="/WEB-INF/views/template/client/mainLayout.jsp">
+		<put-attribute name="title" value="주지육림" />
+		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/template/client/content.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/client/footer.jsp" />
+	</definition>
+	
+	<definition name="content" template="/WEB-INF/views/template/client/contentLayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/template/client/footer.jsp" />
+	</definition>
+	
+	<definition name="/board/*" extends="content">
+		<put-attribute name="title" value="기본 게시판" />
+		<put-attribute name="body" value="/WEB-INF/views/board/{1}.jsp" />
+	</definition>
+	
+	<definition name="/member/*" extends="content">
+		<put-attribute name="title" value="회원가입" />
+		<put-attribute name="body" value="/WEB-INF/views/member/{1}.jsp" />
+	</definition>
+	
+	<definition name="/login/*" extends="content">
+		<put-attribute name="title" value="로그인"/>
+		<put-attribute name="body" value="/WEB-INF/views/login/{1}.jsp"/>
+	</definition>
+	
+	<definition name="/mypage/*" extends="content">
+		<put-attribute name="title" value="마이페이지"/>
+		<put-attribute name="body" value="/WEB-INF/views/mypage/{1}.jsp"/>
+	</definition>
+	
+	<definition name="refund/*" extends="content">
+		<put-attribute name="title" value="환불 규정"/>
+		<put-attribute name="body" value="/WEB-INF/views/refund/{1}.jsp"/>
+	</definition>
+	
+	<definition name="privacy/*" extends="content">
+		<put-attribute name="title" value="개인정보 처리 방침"/>
+		<put-attribute name="body" value="/WEB-INF/views/privacy/{1}.jsp"/>
+	</definition>
+	
+	<definition name="agreement/*" extends="content">
+		<put-attribute name="title" value="이용약관"/>
+		<put-attribute name="body" value="/WEB-INF/views/agreement/{1}.jsp"/>
+	</definition>
+	
+	<definition name="/product/*" extends="content">
+		<put-attribute name="title" value="상품"/>
+		<put-attribute name="body" value="/WEB-INF/views/product/{1}.jsp"/>
+	</definition>
+	
+	<definition name="/notice/*" extends="content">
+		<put-attribute name="title" value="공지사항"/>
+		<put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp"/>
+	</definition>
+	
+	<definition name="/cart/*" extends="content">
+		<put-attribute name="title" value="장바구니"/>
+		<put-attribute name="body" value="/WEB-INF/views/cart/{1}.jsp"/>
+	</definition>
+	
+	<definition name="/company/*" extends="content">
+		<put-attribute name="title" value="기업정보"/>
+		<put-attribute name="body" value="/WEB-INF/views/company/{1}.jsp"/>
+	</definition>
+	
+	<definition name="/review/*" extends="content">
+		<put-attribute name="title" value="기업정보"/>
+		<put-attribute name="body" value="/WEB-INF/views/review/{1}.jsp"/>
+	</definition>
+</tiles-definitions>

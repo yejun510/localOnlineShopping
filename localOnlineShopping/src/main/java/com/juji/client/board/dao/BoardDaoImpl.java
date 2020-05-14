@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.juji.client.board.vo.BoardVO;
+import com.juji.client.reply.vo.ReplyVO;
 
 public class BoardDaoImpl implements BoardDao {
 
@@ -55,6 +56,26 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int ectCnt(BoardVO bvo) {
 		return session.selectOne("ectCnt",bvo);
+	}
+
+	@Override
+	public int myBoardListCnt(BoardVO bvo) {
+		return session.selectOne("myBoardListCnt",bvo);
+	}
+
+	@Override
+	public int myEctCnt(BoardVO bvo) {
+		return session.selectOne("myEctCnt",bvo);
+	}
+
+	@Override
+	public List<ReplyVO> replyList(int q_num) {
+		return session.selectList("replyList",q_num);
+	}
+
+	@Override
+	public void replyDelete(int q_num) {
+		session.delete("replyDelete",q_num);
 	}
 	
 }

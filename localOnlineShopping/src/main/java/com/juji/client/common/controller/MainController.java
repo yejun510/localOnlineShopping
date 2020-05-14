@@ -23,4 +23,9 @@ public class MainController {
 	public String refund() {
 		return "refund/refundInfo";
 	}
+	
+	@RequestMapping(value = "company/companyinfo.do", method = RequestMethod.GET)
+	public String company() {
+		return "/company/companyinfo";
+	}
 }

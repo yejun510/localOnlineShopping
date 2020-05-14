@@ -4,12 +4,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
 <style type="text/css">
+	
+	.agree{
+		display: inline-block;
+	}
+	
+	#id{
+		width: 200px;
+	}
+	#passwd{
+		width: 300px;
+	}
+	#repasswd{
+		width: 300px;
+	}
+	#name{
+		width: 150px;
+	}
 	#address{
 	width: 500px;
 	}
 	#detail{
-	width: 250px;
+	width: 500px;
 	}
 	#num1{
 	width: 50px;
@@ -17,9 +35,47 @@
 	#num2,#num3{
 		width: 80px;
 	}
-	#mail{
-		width: 150px;
-	}
+	
+	
+
+.hClass{
+	font-family: 'Nanum Brush Script', cursive;
+}
+
+#logreg-forms{
+    width:412px;
+    margin:10vh auto;
+    background-color:#f3f3f3;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+#logreg-forms form {
+    width: 100%;
+    max-width: 410px;
+    padding: 15px;
+    margin: auto;
+}
+#logreg-forms .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: 30px;
+    padding: 5px;
+    font-size: 11px;
+}
+#logreg-forms .form-control:focus { z-index: 2; }
+
+
+#logreg-forms{
+	width: 970px;
+	
+}
+
+
+
+
+.lableClass{
+	font-family: 'Nanum Brush Script', cursive;
+}
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 주소 API -->
@@ -67,7 +123,13 @@
 		$("#telCheck").click(function(){
 			$("#tel").val($("#num1").val() +"-"+ $("#num2").val() +"-"+ $("#num3").val());
 			var query = {tel : $("#tel").val()};
-			
+			if($("#num1").val().length<1 || $("#num2").val().length<1 || $("#num3").val().length<1){
+				alert("휴대폰 번호를 입력하지 않았습니다.");
+				$("#num1").val('');
+				$("#num2").val('');
+				$("#num3").val('');
+				$("#num1").focus();
+			}else{
 			$.ajax({
 				url: "/member/telCheck",
 				type: "post",
@@ -85,13 +147,19 @@
 					}
 				}
 			});//ajax 끝
+			}
 		});
 		
 		$("#emailCheck").click(function() {
 			$("#email").val($("#mail").val() +"@"+ $("#e_add").val());
 			
 			var query ={email: $("#email").val()};
-			
+			if($("#mail").val().length<1 || $("#e_add").val() == "이메일 주소를 선택해주세요"){
+				alert("이메일 주소를 입력하지 않았습니다.");
+				$("#mail").val('');
+				$("#e_add").val('이메일 주소를 선택해주세요');
+				$("#mail").focus();
+			}else{
 			$.ajax({
 				url: "/member/emailCheck",
 				type: "post",
@@ -107,6 +175,7 @@
 					}
 				}
 			});
+			}
 		});
 		
 		$("#regist").click(function(){
@@ -210,34 +279,76 @@
 <title>주지육림-회원가입</title>
 </head>
 <body>
-	<div name="header1">
-	<jsp:include page="../template/client/header.jsp"></jsp:include>
-	</div>
 	
-	<h3>회원 가입</h3>
+	<div align="center">
+	<h3 class="hClass">회원 가입</h3>
 	<hr>
 	<form id="memberForm">
-		<label for="id">아이디</label>&nbsp;&nbsp;&nbsp;<input type="text" id="id" name="id" placeholder="영문/숫자 포함 8~20자">&nbsp;&nbsp;&nbsp;<input type="button" id="idCheck" value="중복확인"><br>
-		<label for="passwd">비밀번호</label>&nbsp;&nbsp;&nbsp;<input type="password" id="passwd" name="passwd" placeholder="영문/숫자 포함 8~20자"><br>
-		<label for="repasswd">비밀번호 확인</label>&nbsp;&nbsp;&nbsp;<input type="password" id="repasswd" placeholder="비밀번호를 다시 입력해 주세요"><br>
-		<label for="name">이름</label>&nbsp;&nbsp;&nbsp;<input type="text" id="name" name="name" placeholder="이름을 입력해 주세요."><br>
-		<input type="hidden" id="p_address" name="address">
-		<label for="postcode">주소</label>&nbsp;&nbsp;&nbsp;<input type="text" id="postcode">&nbsp;&nbsp;&nbsp;<input type="button" name="search" id="search" value="우편번호 찾기"><br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="address"><br>
-		<label for="detail">상세 주소</label>&nbsp;&nbsp;&nbsp;<input type="text" id="detail"><br>
-		<input type="hidden" id="tel" name="tel">
-		<label for="num1">휴대폰 번호</label>&nbsp;&nbsp;&nbsp;<input type="text" id="num1">-<input type="text" id="num2">-<input type="text" id="num3">&nbsp;&nbsp;&nbsp;<input type="button" id="telCheck" value="중복확인"><br>
-		<input type="hidden" id="email" name="email">
-		<label for="mail">이메일</label>&nbsp;&nbsp;&nbsp;<input type="text" id="mail">@<select id="e_add">
-																			<option>이메일 주소를 선택해주세요</option>
-																			<option value="naver.com">naver.com</option>
-																			<option value="hanmail.com">hanmail.com</option>
-																			<option value="gmail.com">gmail.com</option>
-																				</select>&nbsp;&nbsp;&nbsp;<input type="button" id="emailCheck" value="중복확인">
-																				<br>
-																				
-		<input type="checkbox" id="all" class="a"><label for="all">전체 선택</label><br>
-		<input type="checkbox" id="agreement" class="check" value="동의"> <label for="agreement">이용약관 <span style="color: red">(필수)</span></label><br> <textarea rows="20" cols="50" readonly="readonly">제1조(목적)
+	<div id="logreg-forms">
+		<br><br>
+		<table>
+			<tr>
+				<td><label for="id" class="lableClass">아이디</label></td>
+				<td><input type="text" id="id" name="id" placeholder="영문/숫자 포함 8~20자" class="form-control"></td>
+				<td><input type="button" id="idCheck" value="중복확인" class="btn btn-info btn-sm"></td>
+			</tr>
+			
+			<tr>
+				<td><label for="passwd" class="lableClass">비밀번호</label></td>
+				<td colspan="2"><input type="password" id="passwd" name="passwd" placeholder="영문/숫자 포함 8~20자" class="form-control"></td>
+			</tr>
+			
+			<tr>
+				<td><label for="repasswd" class="lableClass">비밀번호 확인</label></td>
+				<td colspan="2"><input type="password" id="repasswd" placeholder="비밀번호를 다시 입력해 주세요" class="form-control"></td>
+			</tr>
+			
+			<tr>
+				<td><label for="name" class="lableClass">이름</label></td>
+				<td colspan="2"><input type="text" id="name" name="name" placeholder="이름을 입력해 주세요." class="form-control"></td>
+			</tr>
+			
+			<tr>
+				<td><label for="postcode" class="lableClass">주소</label></td>
+				<td colspan="2"><div class="form-inline"><input type="hidden" id="p_address" name="address">
+					<input type="text" id="postcode" class="form-control" placeholder="우편번호">
+					<input type="button" name="search" id="search" value="우편번호 찾기" class="btn btn-info btn-sm"></div>
+					<input type="text" id="address" class="form-control" placeholder="주소"></td>
+			</tr>
+			
+			<tr>
+				<td><label for="detail" class="lableClass">상세 주소</label></td>
+				<td colspan="2"><input type="text" id="detail" class="form-control" placeholder="상세주소"></td>
+			</tr>
+			
+			<tr>
+				<td><input type="hidden" id="tel" name="tel">
+					<label for="num1" class="lableClass">휴대폰 번호</label></td>
+				<td><div class="form-inline"><input type="text" id="num1" class="form-control">-
+					<input type="text" id="num2" class="form-control">-
+					<input type="text" id="num3" class="form-control"></div></td>
+				<td><input type="button" id="telCheck" value="중복확인" class="btn btn-info btn-sm"></td>
+			</tr>
+			
+			<tr>
+				<td><input type="hidden" id="email" name="email">
+					<label for="mail" class="lableClass">이메일</label></td>
+				<td><div class="form-inline"><input type="text" id="mail" class="form-control">@<select id="e_add" class="form-control">
+																		<option>이메일 주소를 선택해주세요</option>
+																		<option value="naver.com">naver.com</option>
+																		<option value="hanmail.com">hanmail.com</option>
+																		<option value="gmail.com">gmail.com</option>
+																	</select></div></td>
+				<td><input type="button" id="emailCheck" value="중복확인" class="btn btn-info btn-sm"></td>
+			</tr>
+		</table>
+		<br><br>
+		</div>																
+		<div>
+		<input type="checkbox" id="all" class="a"><label for="all" class="lableClass">전체 선택</label><br>
+		<div class="agree">																		
+		
+		<input type="checkbox" id="agreement" class="check" value="동의"> <label for="agreement" class="lableClass">이용약관 <span style="color: red">(필수)</span></label><br><textarea rows="20" cols="50" readonly="readonly">제1조(목적)
 이 약관은 주식회사 주지육림(전자상거래 사업자)이 운영하는 주지육림 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
 ※「PC통신, 무선 등을 이용하는 전자상거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다.」
 
@@ -401,9 +512,9 @@
 제25조(카카오톡 알림톡 시행에 관한 내용)
 신규 회원의 전화번호수집 양식 및 기존 회원 대상의 공지 이메일 등을 통해 안내 주문, 배송 정보 등 비광고성 정보를 카카오톡 알림톡으로 알려드리며, 만약 알림톡 수신이 불가능하거나 수신 차단하신 경우에는 일반 문자 메시지로 보내드립니다. 와이파이 아닌 이동통신망으로 접속시 알림톡 수신 중 데이터요금이 발생할 수 있습니다. 알림톡과는 다른 방식으로 정보 수신을 원하시면 알림톡을 차단해주세요.
 
-부 칙(시행일) 이 약관은 2020년 4월 9일부터 시행합니다.</textarea><br>
-<input type="checkbox" id="privacy" class="check" value="동의"><label for="privacy">개인정보 처리 방침<span style="color: red">(필수)</span></label><br>
-	<textarea rows="20" cols="50" readonly="readonly">주식회사 주지육림은 (이하 회사는) 는 개인정보 보호법 제30조에 따라 정보주체(고객)의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리지침을 수립․공개합니다.
+부 칙(시행일) 이 약관은 2020년 4월 9일부터 시행합니다.</textarea></div>
+<div class="agree"><input type="checkbox" id="privacy" class="check" value="동의"><label for="privacy" class="lableClass">개인정보 처리 방침<span style="color: red">(필수)</span></label><br>
+<textarea rows="20" cols="50" readonly="readonly">주식회사 주지육림은 (이하 회사는) 는 개인정보 보호법 제30조에 따라 정보주체(고객)의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리지침을 수립․공개합니다.
 
 
 
@@ -550,14 +661,12 @@ o 기타 개인정보침해에 대한 신고나 상담이 필요하신 경우에
 
 ■ 고지의 의무
 회사는 개인정보취급방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.
-시행일 : 본 방침은 2019년 6월 21일부터 시행됩니다.</textarea><br><br><br>
+시행일 : 본 방침은 2019년 6월 21일부터 시행됩니다.</textarea></div></div><br><br><br>
 
-	<input type="button" value="가입하기" id="regist">
+	<input type="button" value="가입하기" id="regist" class="btn btn-success btn-default">
 
 	</form>
 	
-	<div name="footer1">
-	<jsp:include page="../template/client/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

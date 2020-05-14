@@ -13,7 +13,7 @@ public class BoardVO extends CommonVO{
 	private String q_content;
 	private String q_writer;
 	private String q_category;
-	private int q_reply;
+	private String q_reply;
 	private int q_passwd;
 	private int q_view;
 	private MultipartFile file1;
@@ -85,10 +85,11 @@ public class BoardVO extends CommonVO{
 	public void setQ_category(String q_category) {
 		this.q_category = q_category;
 	}
-	public int getQ_reply() {
+	
+	public String getQ_reply() {
 		return q_reply;
 	}
-	public void setQ_reply(int q_reply) {
+	public void setQ_reply(String q_reply) {
 		this.q_reply = q_reply;
 	}
 	public int getQ_passwd() {

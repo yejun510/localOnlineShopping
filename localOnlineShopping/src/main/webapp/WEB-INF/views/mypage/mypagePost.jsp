@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+	.table{
+		cursor: default;
+	}
+</style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
 		$(function(){
@@ -41,9 +46,7 @@
 <title>주지육림-나의 게시글</title>
 </head>
 <body>
-	<div name="header1">
-	<jsp:include page="../template/client/header.jsp"></jsp:include>
-	</div>
+	
 	
 	<h3 align="center">나의 게시글 관리</h3>
 	
@@ -69,7 +72,7 @@
 	</div>
 	</form>
 	
-	<table align="center" border="1">
+	<table align="center" class="table table-striped table-hover table-bordered">
 		<tr>
 			<th>글 번호</th>
 			<th>글 제목</th>
@@ -77,6 +80,7 @@
 			<th>작성일</th>
 			<th>조회 수</th>
 			<th>카테고리</th>
+			<th>답변상태</th>
 		</tr>
 		
 		<c:choose>
@@ -85,19 +89,20 @@
 				<input type="hidden" value="${board.q_view }">
 				<input type="hidden" value="${board.q_num }">
 					<tr>
-						<td>${board.q_num }</td>
+						<td class="detail">${board.q_num }</td>
 						<td class="detail">${board.q_title }</td>
-						<td>${board.q_writer }</td>
-						<td>${board.q_date }</td>
-						<td>${board.q_view }</td>
-						<td>${board.q_category }</td>
+						<td class="detail">${board.q_writer }</td>
+						<td class="detail">${board.q_date }</td>
+						<td class="detail">${board.q_view }</td>
+						<td class="detail">${board.q_category }</td>
+						<td class="detail">${board.q_reply }</td>
 					</tr>
 				</c:forEach>
 				<tr>
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="5">등록하신 게시물이 없습니다.</td>
+					<td colspan="7">등록하신 게시물이 없습니다.</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>
@@ -107,8 +112,6 @@
 		<div id="boardPage" align="center">
 			<tag:paging page="${param.page }" total="${total }" list_size="${bvo.pageSize }"/>
 		</div>
-	<div name="footer1">
-	<jsp:include page="../template/client/footer.jsp"></jsp:include>
-	</div>
+	
 </body>
 </html>

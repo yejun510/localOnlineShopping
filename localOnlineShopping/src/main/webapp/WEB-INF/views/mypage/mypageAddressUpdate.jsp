@@ -8,6 +8,11 @@
 	.a{
 		width :600px;
 	}
+	.btn { font-family: 'Nanum Brush Script', cursive;}
+  
+	.btn:hover{color:#fff;}
+
+	.hover1:hover{ box-shadow: 100px 0 0 0 rgba(0,0,0,0.5) inset; }
 </style>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 주소 API -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -176,35 +181,31 @@
 <title>주지육림 - 배송지 등록/수정</title>
 </head>
 <body>
-		<div name="header1">
-		<jsp:include page="../template/client/header.jsp"></jsp:include>
-		</div>
+		
 		
 		<h3 align="center">배송지 수정</h3>
 		
 		<form id="addressForm" action="/mypage/modifyAddress" method="post">
-		<table align="center" border="1">
+		<table align="center" class="table table-striped table-hover table-bordered">
 			<tr>
 				<td><label>배송지1</label></td>
 				<td><input type="text" id="s_address1" name="s_address1" value="${member.s_address1 }" class="a">
-				<input type="button" name="search1" id="search1" value="우편번호 찾기"></td>
+				<input type="button" name="search1" id="search1" value="우편번호 찾기" class="btn btn-primary"></td>
 			</tr>
 			<tr>
 				<td><label>배송지2</label></td>
 				<td><input type="text" id="s_address2" name="s_address2" value="${member.s_address2 }" class="a">
-				<input type="button" name="search2" id="search2" value="우편번호 찾기"></td>
+				<input type="button" name="search2" id="search2" value="우편번호 찾기" class="btn btn-primary"></td>
 			</tr>
 			<tr>
 				<td><label>배송지3</label></td>
 				<td><input type="text" id="s_address3" name="s_address3" value="${member.s_address3 }" class="a">
-				<input type="button" name="search3" id="search3" value="우편번호 찾기"></td>
+				<input type="button" name="search3" id="search3" value="우편번호 찾기" class="btn btn-primary"></td>
 			</tr>
 			<tr>
-				<td colspan="3" align="center"><input type="submit" id="modify" value="등록/수정"><input type="button" id="cancel" value="취소">
+				<td colspan="3" align="center"><input type="submit" id="modify" value="등록/수정" class="btn hover1 btn-default"><input type="button" id="cancel" value="취소" class="btn hover1 btn-default">
 		</table>
 		</form>
-		<div name="footer1">
-		<jsp:include page="../template/client/footer.jsp"></jsp:include>
-		</div>
+		
 </body>
 </html>

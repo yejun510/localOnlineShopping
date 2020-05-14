@@ -12,6 +12,11 @@
 		<typeAlias type="com.juji.client.login.vo.LoginVO" alias="login"/>
 		<typeAlias type="com.juji.client.review.vo.ReviewVO" alias="Review"/>
 		<typeAlias type="com.juji.client.delivery.vo.DeliveryVO" alias="Delivery"/>
+		<typeAlias type="com.juji.client.board.vo.BoardVO" alias="Board"/>
+		<typeAlias type="com.juji.client.reply.vo.ReplyVO" alias="Reply"/>
+		<typeAlias type="com.juji.client.product.vo.ProductVO" alias="Product"/>
+		<typeAlias type="com.juji.client.cart.vo.CartVO" alias="Cart"/>
+		<typeAlias type="com.juji.client.notice.vo.NoticeVO" alias="Notice"/>
 	</typeAliases>
 	
 </configuration>
