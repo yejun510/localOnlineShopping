@@ -4,20 +4,29 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
 <style type="text/css">
+	.mypageTable{
+		height: 400px;
+		font-family: 'Nanum Brush Script', cursive;
+	}
+	h3{
+	font-family: 'Nanum Brush Script', cursive;
+	}
+	.a{
+		width: 420px;
+	}
 </style>
 <title>주지 육림 - My Page</title>
 </head>
 <body>
-	<div name="header1">
-	<jsp:include page="../template/client/header.jsp"></jsp:include>
-	</div>
+	
 	
 	<h3 align="center">마이 페이지</h3>
 	
-	<table border="1" align="center">
+	<table align="center" class="mypageTable" border="1">
 	<tr>
-	<td><div id="orderList"  align="center" class="a">
+	<td><div id="orderList"  align="center" class="a ">
 		<a href="/mypage/mypageOrder">ORDER LIST</a>
 		<p>고객님께서 주문하신 상품의 주문내역을 확인 하실 수 있는 공간입니다.<br>
 			구매 하신 상품의 구매 확정 및 리뷰를 남겨보세요.</p>
@@ -30,7 +39,7 @@
 	</tr>
 	
 	<tr>
-	<td><div id="boardList"  align="center" class="b">
+	<td><div id="boardList"  align="center" class="b ">
 		<a href="/mypage/mypagePost">BOARD</a>
 		<p>고객님께서 작성하신 게시물을 관리할 수 있는 공간입니다.<br>
 			고객님께서 작성하신 게시글을 한눈에 확인 할 수 있습니다.</p>
@@ -41,8 +50,6 @@
 	</div></td>
 	</tr>
 	</table>
-	<div name="footer1">
-	<jsp:include page="../template/client/footer.jsp"></jsp:include>
-	</div>
+	
 </body>
 </html>

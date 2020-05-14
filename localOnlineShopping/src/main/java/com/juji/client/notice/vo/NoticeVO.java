@@ -85,5 +85,4 @@ public class NoticeVO extends CommonVO {
 	public void setN_image3(String n_image3) {
 		this.n_image3 = n_image3;
 	}
-
 }

@@ -6,8 +6,13 @@
 <meta charset="UTF-8">
 <style type="text/css">
 	#address{
-	width :600px;
+	width :700px;
 	}
+	.btn { font-family: 'Nanum Brush Script', cursive;}
+  
+	.btn:hover{color:#fff;}
+
+	.hover1:hover{ box-shadow: 100px 0 0 0 rgba(0,0,0,0.5) inset; }
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 카카오 주소 API -->
@@ -96,49 +101,60 @@
 		            }
 		        }).open();
 		});//카카오 API 메소드 끝
+		
+		$(".info1").click(function(){
+			$("#passwd").focus();
+		});
+		$(".info2").click(function(){
+			$("#passCheck").focus();
+		});
+		$(".info3").click(function(){
+			$("#name").focus();
+		});
+		$(".info4").click(function(){
+			$("#tel").focus();
+		});
+		$(".info5").click(function(){
+			$("#address").focus();
+		});
 	});
 </script>
 <title>주지육림 - 내 정보 수정</title>
 </head>
 <body>
 
-	<div name="header1">
-	<jsp:include page="../template/client/header.jsp"></jsp:include>
-	</div>
 	
 	<h3 align="center">내 정보 수정</h3>
 	<br>
 	<br>
 	<form id="profile">
-	<table align="center" border="1">
+	<table align="center" class="table table-striped table-hover table-bordered">
 		<tr>
-			<td><label>비밀번호</label></td>
-			<td><input type="password" id="passwd" name="passwd" placeholder="영문/숫자 포함 8~20자"></td>
+			<td class="info1"><label>비밀번호</label></td>
+			<td class="info1"><input type="password" id="passwd" name="passwd" placeholder="영문/숫자 포함 8~20자"></td>
 		</tr>
 		<tr>
-			<td><label>비밀번호 확인</label></td>
-			<td><input type="password" id="passCheck" placeholder="영문/숫자 포함 8~20자"></td>
+			<td class="info2"><label>비밀번호 확인</label></td>
+			<td class="info2"><input type="password" id="passCheck" placeholder="영문/숫자 포함 8~20자"></td>
 		<tr>
-			<td><label>이름</label></td>
-			<td><input type="text" value="${member.name }" id="name" name="name"></td>
+			<td class="info3"><label>이름</label></td>
+			<td class="info3"><input type="text" value="${member.name }" id="name" name="name"></td>
 		</tr>
 		<tr>
-			<td><label>핸드폰 번호</label></td>
-			<td><input type="text" id="tel" value="${member.tel }" name="tel"></td>
+			<td class="info4"><label>핸드폰 번호</label></td>
+			<td class="info4"><input type="text" id="tel" value="${member.tel }" name="tel"></td>
 		</tr>
 		<tr>
-			<td><label>주소</label></td>
-			<td><input type="text" id="address" value="${member.address }" name="address"><input type="button" name="search" id="search" value="우편번호 찾기"></td>
+			<td class="info5"><label>주소</label></td>
+			<td class="info5"><input type="text" id="address" value="${member.address }" name="address"><input type="button" name="search" id="search" value="우편번호 찾기" class="btn btn-primary"></td>
 		</tr>
 
 		<tr>
-			<td colspan="2" align="center"><input type="button" id="modify" value="수정 완료"><input type="reset" value="취소" id="cancel"></td> 
+			<td colspan="2" align="center"><input type="button" id="modify" value="수정 완료" class="btn hover1 btn-default"><input type="reset" value="취소" id="cancel" class="btn hover1 btn-default"></td> 
 		</tr>
 	</table>
 	</form>
 	
-	<div name="footer1">
-	<jsp:include page="../template/client/footer.jsp"></jsp:include>
-	</div>
+	
 </body>
 </html>

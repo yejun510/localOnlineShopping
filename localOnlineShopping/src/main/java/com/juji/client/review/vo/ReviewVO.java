@@ -1,6 +1,5 @@
 package com.juji.client.review.vo;
 
-import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +10,7 @@ public class ReviewVO {
 	private String id;
 	private int o_serialnum;
 	private String r_writer;
-	private Date r_date;
+	private String r_date;
 	private MultipartFile r_file;
 	private String r_image;
 	private String r_content;
@@ -49,10 +48,10 @@ public class ReviewVO {
 	public void setR_writer(String r_writer) {
 		this.r_writer = r_writer;
 	}
-	public Date getR_date() {
+	public String getR_date() {
 		return r_date;
 	}
-	public void setR_date(Date r_date) {
+	public void setR_date(String r_date) {
 		this.r_date = r_date;
 	}
 	

@@ -6,8 +6,10 @@
 
 	<select id="boardList" resultType="Board" parameterType="Board">
 		select *
-		from (select question_board.*,rownum as rnum
-       			 from question_board
+		from (select list.*,rownum as rnum
+       			 from  (select question_board.*
+              			 from question_board
+               			order by q_num desc) list
        			 <where>
        			 	<if test="q_category == '기타'">
        			 		q_category = #{q_category}
@@ -16,35 +18,36 @@
        			 		q_category = #{q_category}
        			 	</if>
        			 </where>
-       			 order by q_num desc)
+       			 )
 		<where>
 			 <if test="start_row != null and start_row != ''">
 						<if test="end_row != null and end_row != ''">
 						RNUM BETWEEN #{start_row} AND #{end_row}
 						</if>
 			</if>
-			
 		</where>
 	</select>
 	
 	<select id="myBoardList" parameterType="Board" resultType="Board">
 		select *
-		from (select question_board.*,rownum as rnum
-			  from question_board
+		from (select list.*,rownum as rnum
+			  from (select question_board.*
+              			 from question_board
+               			order by q_num desc) list
 			  <where>
 			  	<if test="q_category == '기타'">
-       			 		q_category = #{q_category}
+       			 		q_category = #{q_category} and
        			 	</if>
        			 	<if test="q_category == '환불/반품'">
-       			 		q_category = #{q_category}
+       			 		q_category = #{q_category} and
        			 	</if>
+       			 	id = #{id}
 			  </where>
-			  order by q_num desc)
+			  )
 		<where>
-			id = #{id}
 			 <if test="start_row != null and start_row != ''">
 						<if test="end_row != null and end_row != ''">
-					and	RNUM BETWEEN #{start_row} AND #{end_row}
+						RNUM BETWEEN #{start_row} AND #{end_row}
 						</if>
 			</if>
 		</where>
@@ -70,7 +73,7 @@
 	
 	<insert id="insertBoard" parameterType="Board">
 		insert into question_board
-		values(question_board_seq.nextval,#{id},#{q_title},sysdate,#{q_content},#{id},#{q_category},#{q_reply},#{q_passwd},#{q_view},#{q_image1},#{q_image2},#{q_image3} )
+		values(question_board_seq.nextval,#{id},#{q_title},sysdate,#{q_content},#{id},#{q_category},#{q_passwd},#{q_view},#{q_image1},#{q_image2},#{q_image3},#{q_reply} )
 	</insert>
 	
 	<update id="detailView" parameterType="Board">
@@ -81,9 +84,28 @@
 		select count(*) from question_board
 	</select>
 	
+	<select id="myBoardListCnt" resultType="int" parameterType="Board">
+		select count(*) from question_board where id=#{id}
+	</select>
+
 	<select id="ectCnt" resultType="int" parameterType="Board">
 		select count(*) from question_board
 		where q_category = #{q_category}
 	</select>
 	
+	<select id="myEctCnt" resultType="int" parameterType="Board">
+		select count(*) from question_board
+		where q_category = #{q_category} and id=#{id}
+	</select>
+	
+	<select id="replyList" resultType="Reply" parameterType="int">
+		select *
+		from answer_reply
+		where q_num = #{q_num}
+	</select>
+	
+	<select id="replyDelete" parameterType="int">
+		delete from answer_reply where q_num = #{q_num}
+	</select>
+
 </mapper>

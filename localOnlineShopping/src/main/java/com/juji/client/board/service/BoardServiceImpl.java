@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.juji.client.board.dao.BoardDao;
 import com.juji.client.board.vo.BoardVO;
+import com.juji.client.reply.vo.ReplyVO;
 
 @Service
 @Transactional
@@ -59,6 +60,33 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int ectCnt(BoardVO bvo) {
 		return dao.ectCnt(bvo);
+	}
+
+	@Override
+	public int myBoardListCnt(BoardVO bvo) {
+		return dao.myBoardListCnt(bvo);
+	}
+
+	@Override
+	public int myEctCnt(BoardVO bvo) {
+		return dao.myEctCnt(bvo);
+	}
+
+	@Override
+	public List<ReplyVO> replyList(int q_num) {
+		return dao.replyList(q_num);
+	}
+
+	@Override
+	public int replyDelete(int q_num) {
+		int result;
+		if(q_num != 0) {
+			dao.replyDelete(q_num);
+			result = 1;
+		}else {
+			result = 0;
+		}
+		return result;
 	}
 
 }

@@ -31,4 +31,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 	public void buyDelivery(DeliveryVO dvo) {
 		dao.buyDelivery(dvo);
 	}
+	@Override
+	public void insertDelivery(DeliveryVO dvo) {
+		dao.insertDelivery(dvo);
+	}
+
 }

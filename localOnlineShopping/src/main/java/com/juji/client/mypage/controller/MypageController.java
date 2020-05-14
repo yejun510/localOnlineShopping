@@ -198,16 +198,17 @@ public class MypageController {
 		if(bvo.getQ_category() != null) {
 		
 		if(bvo.getQ_category().equals("기타") || bvo.getQ_category().equals("환불/반품")) {
-					total = boardservice.ectCnt(bvo);
+					total = boardservice.myEctCnt(bvo);
 		} else {
-			total = boardservice.boardListCnt(bvo);	
+			total = boardservice.myBoardListCnt(bvo);	
 			}
 		}else {
-			total = boardservice.boardListCnt(bvo);
+			total = boardservice.myBoardListCnt(bvo);
 		}
 		System.out.println("전체 레코드 수"+total);
 		
 		List<BoardVO> list = boardservice.myBoardList(bvo);
+		
 		
 		model.addObject("boardList",list);
 		model.addObject("total",total);
