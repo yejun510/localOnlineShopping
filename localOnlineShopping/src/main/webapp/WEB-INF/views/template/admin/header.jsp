@@ -22,19 +22,19 @@ function logout(){
 			<span class="icon-bar"></span> 
 			<span class="icon-bar"></span>
 		</button>
-		<c:if test="${id == null or id == ''}">
+		<c:if test="${adminID == null or adminID == ''}">
 			<a class="navbar-brand" >주지육림 관리자 페이지</a>
 		</c:if>
-		<c:if test="${id != null and id != ''}">
+		<c:if test="${adminID != null and adminID != ''}">
 			<a class="navbar-brand" href="/admin">주지육림 관리자 페이지</a>
 		</c:if>
 	</div>
 	<div id="navbar" class="collapse navbar-collapse ">
 		<ul class="nav navbar-nav navbar-right">
-			<c:if test="${id == null or id == ''}">
+			<c:if test="${adminID == null or adminID == ''}">
 				<li><a href="/admin/loginPage.do">로그인</a></li>
 			</c:if>
-			<c:if test="${id != null and id != ''}">
+			<c:if test="${adminID != null and adminID != ''}">
 				<fieldset id="loginAfter">
 						<strong>관리자님 반갑습니다</strong>
 				</fieldset>

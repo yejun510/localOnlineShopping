@@ -200,7 +200,7 @@
 		</div>
 	</div>
 		<br><br>
-	<input type="button" id="confirm" value="구매확정 내역" class="btn btn-default">
+	<input type="button" id="confirm" value="구매확정 내역" class="btn btn-success">
 		<br><br>
 	<div style="border: 1px solid" id="confirm-contain">
 	<h3 align="center">구매확정 내역</h3>
