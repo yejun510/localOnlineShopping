@@ -33,7 +33,7 @@ public class AdminLoginController {
 		String passwd = req.getParameter("adminPass");
 		if (id.equals("admin") && passwd.equals("1234")) {
 			result = 1;
-			session.setAttribute("id", id);
+			session.setAttribute("adminID", id);
 		}
 		return result;
 	}
