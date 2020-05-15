@@ -17,9 +17,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 	DeliveryDao dao;
 	
 	@Override
-	public List<DeliveryVO> listDelivery(String id) {
+	public List<DeliveryVO> listDelivery(DeliveryVO dvo) {
 		
-		return dao.listDelivery(id);
+		return dao.listDelivery(dvo);
 	}
 	
 	@Override
@@ -34,6 +34,21 @@ public class DeliveryServiceImpl implements DeliveryService {
 	@Override
 	public void insertDelivery(DeliveryVO dvo) {
 		dao.insertDelivery(dvo);
+	}
+
+	@Override
+	public List<DeliveryVO> confirmList(DeliveryVO dvo) {
+		return dao.confirmList(dvo);
+	}
+
+	@Override
+	public int listCnt(String id) {
+		return dao.listCnt(id);
+	}
+
+	@Override
+	public int confirmCnt(String id) {
+		return dao.confirmCnt(id);
 	}
 
 }

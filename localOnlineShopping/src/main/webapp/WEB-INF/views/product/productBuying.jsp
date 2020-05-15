@@ -294,7 +294,7 @@
 			<tr>	
 				<td>주소</td>
 				<td><input type="text" id="re_postalcode" value="${member.address }" class="form-control">
-					<input type="button" value="주소찾기" id="re_post"></td>
+					<input type="button" value="주소찾기" id="re_post" class="btn btn-default"></td>
 			</tr>
 			<tr>	
 				<td>휴대전화</td>
@@ -320,8 +320,8 @@
 					
 				</td>
 			<tr>
-				<td align="center"><input type="button" value="구매하기" id="buyNow">
-				<input type="button" value="구매취소" id="buyCancel" onclick="history.back(-1);"></td>
+				<td align="center"><input type="button" value="구매하기" id="buyNow" class="btn btn-default">
+				<input type="button" value="구매취소" id="buyCancel" onclick="history.back(-1);" class="btn btn-default"></td>
 			</tr>
 		</table>
 	</form>

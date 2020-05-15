@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,28 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		if(${listBtn == '1'}){
+			$("#order-contain").hide();
+			$("#confirm").attr("value","주문내역");
+		}else{
+			$("#order-contain").show();
+			$("#confirm-contain").hide();
+			$("#confirm").attr("value","구매내역");
+		}
+		$("#confirm").click(function(){
+			if($("#confirm").attr("value") == '구매내역'){
+				$("#confirm-contain").show();
+				$("#order-contain").hide();
+				$("#listBtn").val('1');
+				goPage(1);
+			}else{
+				$("#order-contain").show();
+				$("#confirm-contain").hide();
+				$("#listBtn").val('0');
+				goPage(1);
+			}
+		});
+		
 		$(".cancel").click(function(){
 			var status = $(this).parent().parent().prev().prev().val();
 			var num = $(this).parent().parent().prev().val();
@@ -85,6 +108,15 @@
 		});
 		
 	});
+	function goPage(page){
+		$("#page").val(page);
+		$("#page2").val(page);
+		$("#pageForm").attr({
+			"method":"get",
+			"action":"/mypage/mypageOrder"
+		});
+		$("#pageForm").submit();
+	}
 </script>
 <meta charset="UTF-8">
 <title>주문 내역</title>
@@ -92,7 +124,11 @@
 <body>
 
 	
-	
+	<form id="pageForm">
+		<input type="hidden" id="page" name="page" value="${dvo.page }">
+		<input type="hidden" id="page2" name="page2" value="${page2 }">
+		<input type="hidden" id="listBtn" name="listBtn" value="${listBtn }">
+	</form>
 	<form id="deleteForm">
 		<input type="hidden" id="status" name="o_status">
 		<input type="hidden" id="num" name="o_serialnum"> 
@@ -107,7 +143,7 @@
 		<input type="hidden" id="num3" name="o_serialnum">
 	</form>
 	
-	<div style="border: 1px solid">
+	<div style="border: 1px solid" id="order-contain">
 	<h3 align="center">주문 내역</h3>
 		<table align="center" class="table table-striped table-bordered">
 			<tr>
@@ -130,7 +166,7 @@
 			<c:choose>
 				<c:when test="${not empty list }">
 					<c:forEach var="d_list" items="#{list }">
-						<c:if test="${d_list.o_status != '구매 확정' }">
+						
 						<input type="hidden" id="o_status" value="${d_list.o_status }"/>
 						<input type="hidden" value="${d_list.o_serialnum }"/>
 						<tr>
@@ -148,7 +184,6 @@
 							<td><input type="button" value="구매확정" class="buying btn hover1 btn-default"></td>
 							<td><input type="button" value="주문 취소" class="cancel btn hover1 btn-default"></td>
 						</tr>
-						</c:if>
 					</c:forEach>
 				</c:when>
 				
@@ -160,11 +195,14 @@
 			</c:choose>
 			
 		</table>
+		<div align="center">
+			<tag:paging page="${param.page }" total="${total }" list_size="5"/>
+		</div>
 	</div>
-	<br>
-	<br>
-	
-	<div style="border: 1px solid">
+		<br><br>
+	<input type="button" id="confirm" value="구매확정 내역" class="btn btn-default">
+		<br><br>
+	<div style="border: 1px solid" id="confirm-contain">
 	<h3 align="center">구매확정 내역</h3>
 		<table align="center" class="table table-striped table-bordered">
 			<tr>
@@ -182,13 +220,13 @@
 				<th>리뷰 작성</th>
 			</tr>
 			<c:choose>
-				<c:when test="${not empty list }">
-					<c:forEach var="d_list" items="#{list }">
-						<c:if test="${d_list.o_status == '구매 확정' }">
+				<c:when test="${not empty list2 }">
+					<c:forEach var="d_list" items="#{list2 }">
 						<input type="hidden" value="${d_list.p_num }"/>
 						<input type="hidden" value="${d_list.o_serialnum }"/>
 						<tr>
-							<td><img src="/uploadStorage/product/${d_list.o_image }" width="100px" height="100px"></td>
+							<td><img src="/uploadStorage/product/${d_list.o_image }" width="100px" height="100px">
+							<input type="hidden" value="${d_list.o_confirm}"></td>
 							<td>${d_list.o_num}</td>
 							<td>${d_list.o_product }</td>
 							<td>${d_list.o_date }</td>
@@ -201,7 +239,6 @@
 							<td>${d_list.o_status }</td>
 							<td><input type="button" value="리뷰 작성" class="review btn hover1 btn-default"></td>
 						</tr>
-						</c:if>
 					</c:forEach>
 				</c:when>
 				
@@ -213,6 +250,9 @@
 			</c:choose>
 			
 		</table>
+		<div align="center">
+			<tag:paging page="${page2 }" total="${total2 }" list_size="5"/>
+		</div>
 	</div>
 	
 </body>

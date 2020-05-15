@@ -219,15 +219,47 @@ public class MypageController {
 	
 	//주문 내역 조회 페이지
 	@RequestMapping(value = "/mypageOrder",method = RequestMethod.GET)
-	public ModelAndView myOrderList(HttpSession session,HttpServletRequest req) {
+	public ModelAndView myOrderList(HttpSession session,HttpServletRequest req,@ModelAttribute DeliveryVO dvo,String page2,String listBtn) {
 		ModelAndView model = new ModelAndView();
+		DeliveryVO dvo2 = new DeliveryVO();
+		int total;
+		int total2;
+		
+		if(listBtn != null && listBtn.length() != 0 ) {
+			
+			System.out.println(listBtn+"<<<listBtn");
+		}else {
+			listBtn = "0";
+			System.out.println(listBtn+"<<<listBtn");	
+		}
+		dvo.setPageSize("5");
+		dvo2.setPageSize("5");
+		dvo2.setPage(page2);
+		
+		
+		Paging.setPage(dvo);
+		Paging.setPage(dvo2);
 		
 		String id =(String)session.getAttribute("id");
 		
-		List<DeliveryVO> list = deliveryservice.listDelivery(id);
+		dvo.setId(id);
+		dvo2.setId(id);
+		
+		List<DeliveryVO> list = deliveryservice.listDelivery(dvo);
+		List<DeliveryVO> list2 = deliveryservice.confirmList(dvo2);
+		
+		total = deliveryservice.listCnt(id);
+		total2 = deliveryservice.confirmCnt(id);
+		
 		
 		model.addObject("list",list);
-		
+		model.addObject("list2",list2);
+		model.addObject("total",total);
+		model.addObject("total2",total2);
+		model.addObject("dvo",dvo);
+		model.addObject("dvo2",dvo2);
+		model.addObject("page2",page2);
+		model.addObject("listBtn",listBtn);
 		req.setAttribute("id", id);
 		
 		model.setViewName("/mypage/mypageOrder");

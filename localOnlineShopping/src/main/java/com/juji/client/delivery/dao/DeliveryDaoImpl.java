@@ -12,8 +12,8 @@ public class DeliveryDaoImpl implements DeliveryDao {
 	SqlSession session;
 
 	@Override
-	public List<DeliveryVO> listDelivery(String id) {
-		return session.selectList("listDelivery",id);
+	public List<DeliveryVO> listDelivery(DeliveryVO dvo) {
+		return session.selectList("listDelivery",dvo);
 	}
 
 	@Override
@@ -28,6 +28,21 @@ public class DeliveryDaoImpl implements DeliveryDao {
 	@Override
 	public void insertDelivery(DeliveryVO dvo) {
 		 session.insert("insertDelivery", dvo);
+	}
+
+	@Override
+	public List<DeliveryVO> confirmList(DeliveryVO dvo) {
+		return session.selectList("confirmList",dvo);
+	}
+
+	@Override
+	public int listCnt(String id) {
+		return session.selectOne("listCnt",id);
+	}
+
+	@Override
+	public int confirmCnt(String id) {
+		return session.selectOne("confirmCnt",id);
 	}
 
 }

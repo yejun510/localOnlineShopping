@@ -139,6 +139,8 @@ import com.juji.client.member.vo.MemberVO;
 		//4. 장바구니상품 구매페이지
 		 @RequestMapping( value = "/insertCartBuying", method = RequestMethod.POST)
 			public String cartBuying(@ModelAttribute DeliveryVO dvo , HttpSession session,String seqList){
+			 String o_num = (int)(Math.random()*100000000)+"";
+			 	dvo.setO_num(o_num);
 			 	System.out.println("카트 전체 구매");
 			 	String id = (String) session.getAttribute("id");
 			 	List<CartVO> c_list = cartService.cartList(id);

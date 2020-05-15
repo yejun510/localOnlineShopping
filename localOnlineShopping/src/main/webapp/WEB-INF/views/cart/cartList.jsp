@@ -50,6 +50,7 @@ $(function() {
 </script>
 </head>
 <body>
+	<c:set var="sum" value="0"/>
 	<div id="includeAside" class="col-md-1">
 		<jsp:include page="../template/client/aside1.jsp"/>
 	</div>
@@ -87,7 +88,8 @@ $(function() {
 							<td>${cart.c_date}</td>
 							<td>${cart.c_quantity}</td>
 							<td>${cart.c_price}</td>
-							<td>${cart.c_totalprice}</td>
+							<td>${cart.c_totalprice}
+								<c:set var="sum" value="${sum+cart.c_totalprice }"/></td>
 						</tr>
 					</c:forEach>
 					</c:when>
@@ -96,7 +98,10 @@ $(function() {
 							<td colspan="7">장바구니에 등록된 상품이 없습니다.</td>
 					</c:otherwise>
 				</c:choose>
-			</tbody>		
+			</tbody>
+			<tr>
+				<td>총 가격 : ${sum } </td>		
+			</tr>
 			<tr>
 				<td colspan="9" align="right">
 					<input type="button" value="전체상품구매" id="all_buyBtn" class="btn btn-default">

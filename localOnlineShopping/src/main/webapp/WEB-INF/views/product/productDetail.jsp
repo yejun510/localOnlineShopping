@@ -158,7 +158,7 @@
 			<input type="hidden" name="p_name" value="${detail.p_name}" />
 			<input type="hidden" name="p_price" value="${detail.p_price}" />
 			<input type="hidden" name="p_weight" value="${detail.p_weight}" />
-			<input type="hidden" name="p_image" value="${detail.p_file}" />
+			<input type="hidden" name="p_file" value="${detail.p_file}" />
 			<input type="hidden" name="p_quantity" id="p_quantity"/>
 			<input type="hidden" name="p_totalprice" id="p_totalprice"/>
 		</form>

@@ -20,6 +20,15 @@ public class DeliveryVO extends CommonVO {
 	private String o_image;
 	private String o_product;
 	private String o_paymethod;
+	private String o_confirm;
+
+	public String getO_confirm() {
+		return o_confirm;
+	}
+
+	public void setO_confirm(String o_confirm) {
+		this.o_confirm = o_confirm;
+	}
 
 	public String getO_date() {
 		return o_date;

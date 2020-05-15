@@ -118,7 +118,7 @@ public class ProductController {
 		
 	    model.addAttribute("member",member);  
 		model.addAttribute("p_quantity",req.getParameter("p_quantity"));
-		model.addAttribute("product_one",pvo);
+		model.addAttribute("product_one",pvo2);
 		
 		return "/product/productBuying";
 	}
@@ -129,12 +129,13 @@ public class ProductController {
 	// 4. 구매한 내역 넣기
 	 @RequestMapping(value = "/buyingInsert.do", method = RequestMethod.POST )
 	 public String buyingInsert(HttpServletRequest request,@ModelAttribute DeliveryVO dvo,HttpSession session) {
-		 
+		 String o_num = (int)(Math.random()*100000000)+"";
 		 String result;
 		 
 		 String id = (String)session.getAttribute("id");
 			dvo.setId(id);
-			
+			dvo.setO_num(o_num);
+			 
 			if(dvo.getO_paymethod().equals("무통장 입금")) {
 				dvo.setO_status("입금 전");
 			}else {
