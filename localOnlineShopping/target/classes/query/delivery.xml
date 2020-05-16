@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.juji.client.delivery.dao.DeliveryDao">
+
+	<select id="listDelivery" parameterType="Delivery" resultType="Delivery">
+		select * 
+		from (select list.*, rownum as rnum
+			 from (select *
+				   from delivery
+				   order by o_serialnum desc) list
+			  where id=#{id}	and o_status not in '구매 확정' )
+		<where>
+			 <if test="start_row != null and start_row != ''">
+						<if test="end_row != null and end_row != ''">
+						RNUM BETWEEN #{start_row} AND #{end_row}
+						</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="confirmList" parameterType="Delivery" resultType="Delivery">
+		select * 
+		from (select list.*, rownum as rnum
+			 from (select *
+				   from delivery
+				   order by o_confirm desc) list
+			 where id=#{id} and o_status = '구매 확정' )
+		<where>
+			 <if test="start_row != null and start_row != ''">
+						<if test="end_row != null and end_row != ''">
+						RNUM BETWEEN #{start_row} AND #{end_row}
+						</if>
+			</if>
+		</where>
+	</select>
+	
+	<delete id="deleteDelivery" parameterType="Delivery">
+		delete from delivery where o_serialnum = #{o_serialnum}
+	</delete>
+	
+	<update id="buyDelivery" parameterType="Delivery">
+		update delivery set o_status = '구매 확정', o_confirm = sysdate where o_serialnum = #{o_serialnum}  
+	</update>
+	<insert id="insertDelivery" parameterType="Delivery">
+		insert INTO DELIVERY(
+			o_serialnum
+			, p_num
+			, id
+			, o_date
+			, o_address
+			, o_tel
+			, o_quantity
+			, o_totalprice
+			, o_price
+			, o_num
+			, o_reciever
+			, o_reciever_number
+			, o_delivery
+			, o_image
+			, o_product
+			, o_paymethod
+			, o_status
+		)VALUES(
+				delivery_seq.nextval
+				,#{p_num}
+				,#{id}
+				,sysdate
+   	      ,#{o_address}
+   	      ,#{o_tel}
+   	      ,#{o_quantity}
+   	      ,#{o_totalprice}
+   	      ,#{o_price}
+   	      ,#{o_num}
+   	      ,#{o_reciever}
+   	      ,#{o_reciever_number}
+   	      ,#{o_delivery}
+   	      ,#{o_image}
+   	      ,#{o_product}
+   	      ,#{o_paymethod}
+   	      ,#{o_status}
+	)
+	</insert>
+	
+	<select id="listCnt" parameterType="String" resultType="int">
+		select count(*)
+		from delivery
+		where id = #{id} and o_status not in '구매 확정'
+	</select>
+	
+	<select id="confirmCnt" parameterType="String" resultType="int">
+		select count(*)
+		from delivery
+		where id=#{id} and o_status = '구매 확정'
+	</select>
+</mapper>

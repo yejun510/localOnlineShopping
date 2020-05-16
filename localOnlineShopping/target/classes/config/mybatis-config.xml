@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.juji.client.member.vo.MemberVO" alias="member"/>
+		<typeAlias type="com.juji.client.login.vo.LoginVO" alias="login"/>
+		<typeAlias type="com.juji.client.review.vo.ReviewVO" alias="Review"/>
+		<typeAlias type="com.juji.client.delivery.vo.DeliveryVO" alias="Delivery"/>
+		<typeAlias type="com.juji.client.board.vo.BoardVO" alias="Board"/>
+		<typeAlias type="com.juji.client.reply.vo.ReplyVO" alias="Reply"/>
+		<typeAlias type="com.juji.client.product.vo.ProductVO" alias="Product"/>
+		<typeAlias type="com.juji.client.cart.vo.CartVO" alias="Cart"/>
+		<typeAlias type="com.juji.client.notice.vo.NoticeVO" alias="Notice"/>
+	</typeAliases>
+		
+</configuration>

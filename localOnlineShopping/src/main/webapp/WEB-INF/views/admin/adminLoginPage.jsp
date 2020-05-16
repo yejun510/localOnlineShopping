@@ -53,7 +53,7 @@
 <body>
 	<div class="contentContainer">
 		<div class="well">
-			<c:if test="${id == null or id == ''}">
+			<c:if test="${adminID == null or adminID == ''}">
 				<form id="loginForm" class="form-horizontal">
 					
 					<div class="form-group">

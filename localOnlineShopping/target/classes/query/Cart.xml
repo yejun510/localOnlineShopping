@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.juji.client.cart.dao.CartDao">
+<!-- 장바구니 상품 추가 -->
+	<insert id="cartInsert" parameterType="Cart">
+		INSERT INTO CART(
+			c_num,
+			p_num,
+			id,
+			c_name,
+			c_date,
+			c_quantity,
+			c_totalprice,
+			c_price,
+			c_image
+			)VALUES(
+				cart_seq.NEXTVAL,#{p_num}, #{id},#{c_name},sysdate,#{c_quantity},#{c_totalprice},#{c_price},#{c_image}
+			)
+			
+	</insert>
+
+	<!-- 장바구니 목록 -->
+	<select id="cartList" resultType="Cart" parameterType="String">
+		SELECT *
+		from CART
+		where ID = #{ID}
+	</select>
+	
+	<!-- 장바구니 전체 금액 -->
+	<select id="sumMoney" resultType="int">
+		select nvl(SUM(p_price*c_quantity),0)money
+		from CART C, PRODUCT P
+		where C.P_num = P.P_num AND C.ID = #{id}
+	</select>
+	
+	<delete id="deleteCartList" parameterType="String">
+		delete from cart
+		where id = #{id}
+	</delete>
+	
+	<delete id="selectDelete">
+		delete from cart
+		where c_num IN
+			<foreach collection="array" item="seqArray" open="(" close=")" separator=",">
+				#{seqArray}
+			</foreach>
+	</delete>
+	
+	<!-- 장바구니 동일한 상품 레코드 확인 -->
+	<select id="countCart" resultType="int" parameterType="Cart">
+		select count(*)
+		from CART
+		where ID=#{id}
+		and p_num = #{p_num}
+	</select>
+	<!-- 장바구니에 동일한 상품이 존재하면 수정 -->
+	<update id="updateCart">
+		update CART
+		set c_quantity = c_quantity + #{c_quantity}, c_totalprice = c_totalprice+#{c_price}*#{c_quantity}
+		where ID = #{id}
+		and p_num = #{p_num}
+	</update>
+	<select id="cartSelectList" resultType="Cart"> 
+			select *
+			from cart
+			where c_num IN
+			<foreach collection="array" item="seqArray" open="(" close=")" separator=",">
+				#{seqArray}
+			</foreach>
+	</select>
+	
+	
+</mapper>

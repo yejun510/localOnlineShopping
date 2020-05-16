@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juji.admin.review.dao.AdminReviewDao">
+
+	<!-- 후기 기본 조회 -->
+	<select id="reviewList" resultType="review" parameterType="review">
+		SELECT 
+			*
+		FROM 
+			review_reply
+			<choose>
+				<when test="r_satisfaction != null">
+					<where>
+						<if test="r_satisfaction == '전체선택'">
+							r_satisfaction like '%'
+						</if>
+						<if test="r_satisfaction == '매우만족'">
+							r_satisfaction = '매우만족'
+						</if>
+						<if test="r_satisfaction == '만족'">
+							r_satisfaction = '만족'
+						</if>
+						<if test="r_satisfaction == '보통'">
+							r_satisfaction = '보통'
+						</if>
+						<if test="r_satisfaction == '불만'">
+							r_satisfaction = '불만'
+						</if>
+						<if test="r_satisfaction == '매우불만'">
+							r_satisfaction = '매우불만'
+						</if>
+						<if test="p_num == '전체'">
+							and	p_num like '%'
+						</if>
+						<if test="p_num == '소고기전체'">
+							and	p_num like 100 || '%'
+						</if>
+						<if test="p_num == '돼지고기전체'">
+							and	p_num like 200 || '%'
+						</if>
+						<if test="p_num != '소고기전체' and p_num != '돼지고기전체' and p_num != '전체'">
+							and	p_num = '${p_num}'
+						</if>
+					</where>
+				</when>
+			</choose>
+		ORDER BY 
+			r_date desc
+	</select>
+	
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="reviewDelete" parameterType="review">
+		DELETE 
+		FROM review_reply 
+		WHERE r_num = #{r_num}
+	</delete>
+</mapper>

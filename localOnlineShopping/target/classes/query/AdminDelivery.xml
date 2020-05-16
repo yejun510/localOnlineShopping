@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juji.admin.delivery.dao.AdminDeliveryDao">
+	<resultMap type="java.util.TreeMap" id="graph"/>
+
+<select id="total_sales" resultMap="graph" parameterType="delivery">
+      select 
+		      nvl(sum(d1),0) "01일",
+		      nvl(sum(d2),0) "02일",
+		      nvl(sum(d3),0) "03일",
+		      nvl(sum(d4),0) "04일",
+		      nvl(sum(d5),0) "05일",
+		      nvl(sum(d6),0) "06일",
+		      nvl(sum(d7),0) "07일",
+		      nvl(sum(d8),0) "08일",
+		      nvl(sum(d9),0) "09일",
+		      nvl(sum(d10),0) "10일",
+		      nvl(sum(d11),0) "11일",
+		      nvl(sum(d12),0) "12일",
+		      nvl(sum(d13),0) "13일",
+		      nvl(sum(d14),0) "14일",
+		      nvl(sum(d15),0) "15일",
+		      nvl(sum(d16),0) "16일",
+		      nvl(sum(d17),0) "17일",
+		      nvl(sum(d18),0) "18일",
+		      nvl(sum(d19),0) "19일",
+		      nvl(sum(d20),0) "20일",
+		      nvl(sum(d21),0) "21일",
+		      nvl(sum(d22),0) "22일",
+		      nvl(sum(d23),0) "23일",
+		      nvl(sum(d24),0) "24일",
+		      nvl(sum(d25),0) "25일",
+		      nvl(sum(d26),0) "26일",
+		      nvl(sum(d27),0) "27일",
+		      nvl(sum(d28),0) "28일",
+		      nvl(sum(d29),0) "29일",
+		      nvl(sum(d30),0) "30일",
+		      nvl(sum(d31),0) "31일"
+      from (select 
+	      		(case when o_date = #{o_date}||'/01' then o_totalprice end) as d1,
+	            (case when o_date = #{o_date}||'/02' then o_totalprice end) as d2,
+	            (case when o_date = #{o_date}||'/03' then o_totalprice end) as d3,
+	            (case when o_date = #{o_date}||'/04' then o_totalprice end) as d4,
+	            (case when o_date = #{o_date}||'/05' then o_totalprice end) as d5,
+	            (case when o_date = #{o_date}||'/06' then o_totalprice end) as d6,
+	            (case when o_date = #{o_date}||'/07' then o_totalprice end) as d7,
+	            (case when o_date = #{o_date}||'/08' then o_totalprice end) as d8,
+	            (case when o_date = #{o_date}||'/09' then o_totalprice end) as d9,
+	            (case when o_date = #{o_date}||'/10' then o_totalprice end) as d10,
+	            (case when o_date = #{o_date}||'/11' then o_totalprice end) as d11,
+	            (case when o_date = #{o_date}||'/12' then o_totalprice end) as d12,
+	            (case when o_date = #{o_date}||'/13' then o_totalprice end) as d13,
+	            (case when o_date = #{o_date}||'/14' then o_totalprice end) as d14,
+	            (case when o_date = #{o_date}||'/15' then o_totalprice end) as d15,
+	            (case when o_date = #{o_date}||'/16' then o_totalprice end) as d16,
+	            (case when o_date = #{o_date}||'/17' then o_totalprice end) as d17,
+	            (case when o_date = #{o_date}||'/18' then o_totalprice end) as d18,
+	            (case when o_date = #{o_date}||'/19' then o_totalprice end) as d19,
+	            (case when o_date = #{o_date}||'/20' then o_totalprice end) as d20,
+	            (case when o_date = #{o_date}||'/21' then o_totalprice end) as d21,
+	            (case when o_date = #{o_date}||'/22' then o_totalprice end) as d22,
+	            (case when o_date = #{o_date}||'/23' then o_totalprice end) as d23,
+	            (case when o_date = #{o_date}||'/24' then o_totalprice end) as d24,
+	            (case when o_date = #{o_date}||'/25' then o_totalprice end) as d25,
+	            (case when o_date = #{o_date}||'/26' then o_totalprice end) as d26,
+	            (case when o_date = #{o_date}||'/27' then o_totalprice end) as d27,
+	            (case when o_date = #{o_date}||'/28' then o_totalprice end) as d28,
+	            (case when o_date = #{o_date}||'/29' then o_totalprice end) as d29,
+	            (case when o_date = #{o_date}||'/30' then o_totalprice end) as d30,
+	            (case when o_date = #{o_date}||'/31' then o_totalprice end) as d31
+       		from delivery
+	where  o_status = '구매 확정')
+   </select>
+
+	<!-- 게시물 검색 쿼리 분리 -->
+	<sql id="deliveryCommon">
+		SELECT *
+		FROM delivery
+		<where>
+			<if test="search=='o_serialnum'">
+				<![CDATA[ o_serialnum LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='id'">
+				<![CDATA[ id LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 주문 전체 조회 -->
+	<select id="deliveryList" parameterType="delivery" resultType="delivery">
+		/* Delivery - deliveryList */
+		SELECT
+			*
+		FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM (
+					<include refid="deliveryCommon"></include>
+					ORDER BY o_num DESC
+				)list
+			)
+			<where>
+				<if test="start_row != null and start_row !='' ">
+					<if test="end_row != null and end_row !='' ">
+						RNUM BETWEEN #{start_row} AND #{end_row}
+					</if>
+				</if>
+			</where>
+	</select>
+	
+	<!-- 주문상세 페이지를 위한 게시물 조회 -->
+	<select id="deliveryDetail" parameterType="delivery" resultType="delivery">
+		/* Delivery - deliveryDetail */
+		SELECT
+			*
+		FROM
+			delivery
+		WHERE o_serialnum = #{o_serialnum}
+	</select>
+	
+	<!-- 게시물 카운트 페이징 -->
+	<select id="deliveryListCnt" parameterType="delivery"
+		resultType="int">
+		/* Member - memberListCnt */
+		SELECT NVL(count(1),0) FROM
+		(	SELECT list.*, ROWNUM AS RNUM
+			FROM(
+				<include refid="deliveryCommon"></include>
+				ORDER BY o_serialnum desc
+			)list
+		)
+	</select>
+	
+	<!-- 주문정보 수정 -->
+	<update id="deliveryUpdate" parameterType="delivery">
+		/* Delivery - deliveryUpdate */
+		UPDATE
+			delivery
+		SET
+			o_status = #{o_status}
+		WHERE
+			o_serialnum = #{o_serialnum}
+	</update>
+	
+	<!-- 특정 주문진행상태 조회 -->
+	<select id="statusSelect" resultType="delivery" parameterType="delivery">
+		select * from ( select delivery.*,rownum as rnum
+						from delivery 
+						<where>
+							<if test="o_status != null and o_status != ''">
+								o_status = #{o_status}
+							</if>
+						</where>)
+			<where>
+				<if test="start_row != null and start_row !='' ">
+					<if test="end_row != null and end_row !='' ">
+						RNUM BETWEEN #{start_row} AND #{end_row}
+					</if>
+				</if>
+			</where>
+					 
+	</select>
+	
+	<!-- 특정 주문진행상태 리스트 -->
+	<select id="statusTotal" resultType="int" parameterType="delivery">
+		select count(*) from delivery where o_status = #{o_status}
+	</select>
+	
+	
+</mapper>
