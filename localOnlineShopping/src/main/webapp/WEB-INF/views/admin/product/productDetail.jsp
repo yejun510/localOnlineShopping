@@ -23,7 +23,7 @@ var goUrl = ""; //수정버튼과 삭제버튼을 구별하기 위한 변수
 			$("#fileImage").attr({
 				src:"/uploadStorage/product/${detail.p_file}", 
 				width:"75%",
-				height:"75%"
+				height:"50%"
 			});
 		}
 		
@@ -92,8 +92,7 @@ var goUrl = ""; //수정버튼과 삭제버튼을 구별하기 위한 변수
 					<c:if test="${detail.p_file !=''}">
 					<tr>
 						<td class="ac vm">상품 이미지</td>
-						<td>
-						<img id="fileImage"></td>
+						<td><img id="fileImage"></td>
 					</tr>
 					</c:if>
 					<tr>

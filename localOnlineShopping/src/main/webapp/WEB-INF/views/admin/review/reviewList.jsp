@@ -258,11 +258,13 @@
 									<td>${review.r_content}</td>
 									<td>
 										<c:if test="${review.r_image != null}">
-										<img src="/uploadStorage/review/${review.r_image}" width="100px" height="100px" title="클릭하시면 원본크기로 보실 수 있습니다." style="cursor: pointer;" onclick="doImgPop('/uploadStorage/review/${review.r_image}')" /></td>
+										<img src="/uploadStorage/review/${review.r_image}" width="100px" height="100px" 
+										style="cursor: pointer;" onclick="doImgPop('/uploadStorage/review/${review.r_image}')" />
 										</c:if>
+									</td>
 									<td>${review.r_satisfaction}</td>
 									<td>${review.r_date}</td>
-									<td><input type="button" class="btn btn-outline btn-danger reviewDelete" value="삭제"></td>
+									<td><input type="button" class="btn btn-outline btn-danger reviewDelete" value="삭제"></td>             
 								</tr>
 							</c:forEach>
 						</c:when>

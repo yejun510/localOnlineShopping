@@ -28,19 +28,17 @@ public class AdminGraphController {
 	@RequestMapping(value = "/graph/monthGraph.do", method = RequestMethod.GET)
 	public String monthGraph(@ModelAttribute DeliveryVO dvo, Model model,HttpServletRequest req) {
 		log.info("admin monthGraph 호출 성공");
+		
 		Map<String, Integer> total = null;
+		
 		if(req.getParameter("schMonth") != null && req.getParameter("schMonth").length() != 0) {
 			dvo.setO_date(req.getParameter("schMonth"));
-			System.out.println(dvo.getO_date());
 			total = adminDeliveryService.total_sales(dvo);
-			
 		}
-		System.out.println("달       "+req.getParameter("schMonth"));
-		
-		
 		
 		model.addAttribute("graph", total);
 		model.addAttribute("month",req.getParameter("schMonth"));
+		
 		return "admin/graph/monthGraph";
 	}
 

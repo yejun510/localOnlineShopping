@@ -407,7 +407,8 @@ function initDatePickers() {
 				<form id="searchForm" name="searchForm">
 					<h3>년/월 선택</h3>
 					<input type="text" id="schMonth" name="schMonth" value="${month }">
-				</form> <input type="button" id="search" value="검색">
+				</form> 
+				<input type="button" id="search" value="검색">
 			</td>
 		</tr>
 		<tr>
