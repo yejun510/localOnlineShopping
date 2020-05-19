@@ -125,8 +125,8 @@
 		/* 주문정보 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
 		$(".goDetail").click(function() {
 			var o_serialnum = $(this).parents("tr").attr("data-num");
-			$("#o_num").val(o_num);
-			console.log("주문번호 : " + o_num);
+			$("#o_serialnum").val(o_serialnum);
+			console.log("주문번호 : " + o_serialnum);
 			// 상세 페이지로 이동하기 위해 form추가 (id: detailForm)
 			$("#detailForm").attr({
 				"method" : "get",
@@ -183,7 +183,7 @@
 
 		<%-- 상세 페이지 이동을 위한 FORM --%>
 		<form name="detailForm" id="detailForm">
-			<input type="hidden" name="o_num" id="o_num"> 
+			<input type="hidden" name="o_serialnum" id="o_serialnum"> 
 			<input type="hidden" name="page" value="${data.page}"> 
 			<input type="hidden" name="pageSize" value="${data.pageSize}">
 		</form>
@@ -281,7 +281,7 @@
 						<c:when test="${not empty deliveryList}">
 							<c:forEach var="delivery" items="${deliveryList}"
 								varStatus="status">
-								<tr class="tac" data-num="${delivery.o_num}">
+								<tr class="tac" data-num="${delivery.o_serialnum}">
 									<td class="goDetail">${count - status.index}</td>
 									<td class="goDetail">${delivery.o_num}</td>
 									<td class="goDetail">${delivery.o_date}</td>

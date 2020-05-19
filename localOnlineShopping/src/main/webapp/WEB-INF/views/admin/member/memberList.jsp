@@ -28,8 +28,6 @@
 					value = "#list tr td.goDetail";
 				else if ($("#search").val() == 'name')
 					value = "#list tr td.name";
-				else if ($("#search").val() == 'join_date')
-					value = "#list tr td.name";
 				$(value + ":contains('" + word + "')").each(
 						function() {
 							var regex = new RegExp(word, 'gi');

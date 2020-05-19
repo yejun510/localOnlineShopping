@@ -27,8 +27,8 @@ public class AdminMemberController {
 	private AdminMemberService adminMemberService;
 
 	// 회원목록 구현하기
-	@RequestMapping(value = "/member/memberList.do", method = RequestMethod.GET)
-	public String memberList(@ModelAttribute MemberVO mvo, Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/member/memberList.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public String memberList(@ModelAttribute MemberVO mvo, Model model) {
 		log.info("memberList 호출 성공");
 
 		// 페이지 세팅
